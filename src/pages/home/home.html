@@ -1,17 +1,28 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>首页</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>首页</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
-</ion-content>
+	<h2>选择关键字开始答题 {{tips}}</h2>
+	<div class="grid grid-pad">
+		<div *ngFor="let keyword of keywordList" (click)="gotoDetail(keyword)" class="col-1-4">
+			<div class="module hero">
+				<h4>{{keyword.name}}</h4>
+			</div>
+		</div>
+	</div>
+	<!--<ul class="heroes">
+		<li *ngFor="let keyword of keywordList" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
+			<span class="badge">{{keyword.id}}</span> {{keyword.name}}
+		</li>
+	</ul>
+	<ion-grid>
+		<ion-row *ngFor="let keyword of keywordList">
+			<ion-col width-25>{{keyword.name}}</ion-col>
+			<ion-col width-25>{{keyword.name}}</ion-col>
+			<ion-col width-25>{{keyword.name}}</ion-col>
+		</ion-row>
+	</ion-grid>-->
+</ion-content>hero

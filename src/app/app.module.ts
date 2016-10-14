@@ -2,7 +2,6 @@
 import { NgModule } from '@angular/core';
 import { HttpModule }    from '@angular/http';
 import { FormsModule }   from '@angular/forms';
-import { RouterModule }  from '@angular/router';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';

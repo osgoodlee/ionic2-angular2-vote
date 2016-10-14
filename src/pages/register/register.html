@@ -1,54 +1,55 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>登录</ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title *ngIf="showLogin">登录</ion-title>
+		<ion-title *ngIf="!showLogin">注册</ion-title>
+	</ion-navbar>
 </ion-header>
 
-<ion-content class="padding" ng-show="isLogin">
-  <ion-list inset>
-    <ion-item>
-      <ion-label>用户名:</ion-label>
-      <ion-input type="text" [(ngModel)]="user.name"></ion-input>
-    </ion-item>
-    <ion-item >
-      <ion-label>密码:</ion-label>
-      <ion-input type="password" [(ngModel)]="user.password"></ion-input>
-    </ion-item>
-    <ion-item>
-      <button ion-button full (click)="login()">
+<ion-content class="padding">
+	<ion-list inset *ngIf="showLogin">
+		<ion-item>
+			<ion-label>用户名:</ion-label>
+			<ion-input type="text" [(ngModel)]="user.name"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>密码:</ion-label>
+			<ion-input type="password" [(ngModel)]="user.password"></ion-input>
+		</ion-item>
+		<ion-item>
+			<button ion-button full (click)="login()">
         登录
       </button>
-    </ion-item>
-    <ion-item>
-      <button ion-button full (click)="toRegister()">
+		</ion-item>
+		<ion-item>
+			<button ion-button full (click)="toRegister()">
         立即注册
       </button>
-    </ion-item>
-    <ion-item >
-      <span class="input-label">{{loginTip}}</span>
-    </ion-item>
-  </ion-list>
+		</ion-item>
+		<ion-item>
+			<span class="input-label">{{loginTip}}</span>
+		</ion-item>
+	</ion-list>
+	<ion-list inset *ngIf="!showLogin">
+		<ion-item>
+			<ion-label>用户名:</ion-label>
+			<ion-input type="text" [(ngModel)]="user.name"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>密码:</ion-label>
+			<ion-input type="password" [(ngModel)]="user.password"></ion-input>
+		</ion-item>
+		<ion-item>
+			<button ion-button full (click)="register()">
+        注册
+      </button>
+		</ion-item>
+		<ion-item>
+			<button ion-button full (click)="toLogin()">
+        返回登录
+      </button>
+		</ion-item>
+		<ion-item>
+			<span class="input-label">{{loginTip}}</span>
+		</ion-item>
+	</ion-list>
 </ion-content>
-<!--<ion-content class="padding" ng-show="!isLogin">-->
-  <!--<div class="list">-->
-    <!--<label class="item item-input">-->
-      <!--<span class="input-label">用户名</span>-->
-      <!--<input type="text" ng-Model="userData.userId">-->
-    <!--</label>-->
-    <!--<label class="item item-input">-->
-      <!--<span class="input-label">密码</span>-->
-      <!--<input type="password" ng-Model="userData.userPassword">-->
-    <!--</label>-->
-    <!--<p>-->
-      <!--<button class="icon-left ion-ios-browsers button-positive button button-full" ng-click="register()">-->
-        <!--注册-->
-      <!--</button>-->
-      <!--<button class="icon-left ion-android-arrow-up button-positive button button-full" ng-click="toLogin()">-->
-        <!--返回登录-->
-      <!--</button>-->
-    <!--</p>-->
-    <!--<label class="item text-center">-->
-      <!--<span class="input-label">{{registerTip}}</span>-->
-    <!--</label>-->
-  <!--</div>-->
-<!--</ion-content>-->
