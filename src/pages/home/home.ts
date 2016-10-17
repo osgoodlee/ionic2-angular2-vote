@@ -1,9 +1,11 @@
 import { Component,OnInit } from '@angular/core';
 import { Headers, Http} from '@angular/http';
 
-import { NavController } from 'ionic-angular';
+import { NavController,App} from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { KeywordData } from "../../model/keyword-data";
+import { QuestionPage } from "../question/question";
+
 
 @Component({
   selector: 'page-home',
@@ -13,7 +15,7 @@ export class HomePage implements OnInit {
 
   keywordList: KeywordData[];
   tips:string;
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http) {
+  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App) {
 
   }
 
@@ -35,7 +37,7 @@ export class HomePage implements OnInit {
   }
 
   beginAnswer(keyword: KeywordData) {
-    this.navCtrl.push(TabsPage);
+    this.navCtrl.push(QuestionPage,keyword);
   }
 
   private loginHandleError(error: any): Promise<any> {

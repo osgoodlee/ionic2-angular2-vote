@@ -7,22 +7,10 @@
 <ion-content padding>
 	<h2>选择关键字开始答题 {{tips}}</h2>
 	<div class="grid grid-pad">
-		<div *ngFor="let keyword of keywordList" (click)="gotoDetail(keyword)" class="col-1-4">
+		<div *ngFor="let keyword of keywordList" (click)="beginAnswer(keyword)" class="col-1-4">
 			<div class="module hero">
 				<h4>{{keyword.name}}</h4>
 			</div>
 		</div>
 	</div>
-	<!--<ul class="heroes">
-		<li *ngFor="let keyword of keywordList" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
-			<span class="badge">{{keyword.id}}</span> {{keyword.name}}
-		</li>
-	</ul>
-	<ion-grid>
-		<ion-row *ngFor="let keyword of keywordList">
-			<ion-col width-25>{{keyword.name}}</ion-col>
-			<ion-col width-25>{{keyword.name}}</ion-col>
-			<ion-col width-25>{{keyword.name}}</ion-col>
-		</ion-row>
-	</ion-grid>-->
-</ion-content>hero
+</ion-content>

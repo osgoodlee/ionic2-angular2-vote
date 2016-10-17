@@ -7,6 +7,7 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
+import { QuestionPage } from '../pages/question/question';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DataService } from '../pages/service/data-service';
@@ -19,6 +20,7 @@ import { DataService } from '../pages/service/data-service';
     ContactPage,
     HomePage,
     RegisterPage,
+    QuestionPage,
     TabsPage
   ],
   imports: [
@@ -30,6 +32,7 @@ import { DataService } from '../pages/service/data-service';
     AboutPage,
     ContactPage,
     HomePage,
+    QuestionPage,
     RegisterPage,
     TabsPage
   ],

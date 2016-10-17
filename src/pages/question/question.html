@@ -1,0 +1,28 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			开始答题
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<ion-list-header>
+			<h2>{{questionInfo.name}}</h2><a>{{tips}}</a>
+		</ion-list-header>
+		<ion-item *ngFor="let questionItem of questionInfo.questionItemList">
+			<li class="item item-checkbox">
+				<label class="radio">
+            		<input type="radio" name="answer" value="{{questionItem.id}}"  [(ngModel)]="answerItem">{{questionItem.name}}
+          		</label>
+			</li>
+		</ion-item>
+	</ion-list>
+
+	<div class="item ">
+		<button ion-button (click)="submitAnswer()">
+        提交
+      </button>
+	</div>
+</ion-content>
