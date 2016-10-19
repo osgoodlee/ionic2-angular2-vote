@@ -8,6 +8,7 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { QuestionPage } from '../pages/question/question';
+import { ResultPage } from '../pages/result/result';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DataService } from '../pages/service/data-service';
@@ -21,6 +22,7 @@ import { DataService } from '../pages/service/data-service';
     HomePage,
     RegisterPage,
     QuestionPage,
+    ResultPage,
     TabsPage
   ],
   imports: [
@@ -33,6 +35,7 @@ import { DataService } from '../pages/service/data-service';
     ContactPage,
     HomePage,
     QuestionPage,
+    ResultPage,
     RegisterPage,
     TabsPage
   ],

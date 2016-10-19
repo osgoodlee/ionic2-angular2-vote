@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
@@ -27,15 +27,15 @@ export class RegisterPage implements OnInit {
 
   login() {
     var userData = { "name": this.user.name, "password": this.user.password };
-    this.http.post('http://192.168.2.111:8080/lisi/app/login', userData).toPromise()
+    this.http.post('http://localhost:8080/lisi/app/login', userData).toPromise()
       .then(response => {
         let result = response.json();
-        if (result.response == 'success') {
+        if (result.status == 'success') {
           this.dataService.isLogin = true;
           this.dataService.loginUser = result.data;
           this.navCtrl.push(TabsPage);
         } else {
-          this.loginTip = "登录失败：" + result.response;
+          this.loginTip = "登录失败：" + result.tip;
         }
       })
       .catch(this.loginHandleError);
@@ -44,15 +44,15 @@ export class RegisterPage implements OnInit {
   //注册用户
   register() {
     var userData = { "name": this.user.name, "password": this.user.password };
-    this.http.post('http://192.168.2.111:8080/lisi/app/registerUser', userData).toPromise()
+    this.http.post('http://localhost:8080/lisi/app/registerUser', userData).toPromise()
       .then(response => {
         let result = response.json();
-        if (result.response == 'success') {
+        if (result.status == 'success') {
           this.dataService.isLogin = true;
           this.dataService.loginUser = result.data;
           this.navCtrl.push(TabsPage);
         } else {
-          this.registerTip = "注册失败：" + result.response;
+          this.registerTip = "注册失败：" + result.tip;
         }
       })
       .catch(this.registerHandleError);
@@ -69,12 +69,12 @@ export class RegisterPage implements OnInit {
   }
 
   private loginHandleError(error: any): Promise<any> {
-    this.loginTip = "登录失败,出现异常：" + error.response;
-    return Promise.reject(error.response || error);
+    this.loginTip = "登录失败,出现异常：" + error.tip;
+    return Promise.reject(error.tip || error);
   }
 
   private registerHandleError(error: any): Promise<any> {
-    this.loginTip = "登录失败,出现异常：" + error.response;
-    return Promise.reject(error.response || error);
+    this.loginTip = "登录失败,出现异常：" + error.tip;
+    return Promise.reject(error.tip || error);
   }
 }

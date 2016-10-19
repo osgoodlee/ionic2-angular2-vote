@@ -6,7 +6,7 @@
 </ion-header>
 
 <ion-content class="padding">
-	<ion-list inset *ngIf="showLogin">
+	<ion-list  *ngIf="showLogin">
 		<ion-item>
 			<ion-label>用户名:</ion-label>
 			<ion-input type="text" [(ngModel)]="user.name"></ion-input>
@@ -16,14 +16,14 @@
 			<ion-input type="password" [(ngModel)]="user.password"></ion-input>
 		</ion-item>
 		<ion-item>
-			<button ion-button full (click)="login()">
-        登录
-      </button>
+			<button ion-button block (click)="login()">
+				登录
+			</button>
 		</ion-item>
 		<ion-item>
 			<button ion-button full (click)="toRegister()">
-        立即注册
-      </button>
+				立即注册
+			</button>
 		</ion-item>
 		<ion-item>
 			<span class="input-label">{{loginTip}}</span>

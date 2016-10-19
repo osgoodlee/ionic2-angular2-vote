@@ -9,7 +9,7 @@
 <ion-content padding>
 	<ion-list>
 		<ion-list-header>
-			<h2>{{questionInfo.name}}</h2><a>{{tips}}</a>
+			 {{questionInfo.name}} <a>{{tips}}</a>
 		</ion-list-header>
 		<ion-item *ngFor="let questionItem of questionInfo.questionItemList">
 			<li class="item item-checkbox">
@@ -20,8 +20,8 @@
 		</ion-item>
 	</ion-list>
 
-	<div class="item ">
-		<button ion-button (click)="submitAnswer()">
+	<div>
+		<button full ion-button (click)="submitAnswer()">
         提交
       </button>
 	</div>

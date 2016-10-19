@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { Headers, Http} from '@angular/http';
+import { Http} from '@angular/http';
 
 import { NavController,App} from 'ionic-angular';
 import { DataService } from "../service/data-service";
@@ -24,24 +24,28 @@ export class HomePage implements OnInit {
   }
 
   getKeywordData() {
-    this.http.post('http://192.168.2.111:8080/lisi/admin/setting/getKeywordAll', null).toPromise()
+    this.http.post('http://localhost:8080/lisi/admin/setting/getKeywordAll', null).toPromise()
       .then(response => {
         let result = response.json();
-        if (result.sucflag == true) {
-          this.keywordList = result.rows;
+        if (result.status == 'success') {
+          if (result.sucflag == true) {
+            this.keywordList = result.rows;
+          } else {
+            this.tips = "无法获取关键字数据：" + result.tip;
+          }
         } else {
-          this.tips = "无法获取关键字数据：" + result.response;
+          this.tips = "无法获取关键字数据：" + result.tip;
         }
       })
       .catch(this.loginHandleError);
   }
 
   beginAnswer(keyword: KeywordData) {
-    this.navCtrl.push(QuestionPage,keyword);
+    this.navCtrl.push(QuestionPage, { 'keywordid': keyword.id });
   }
 
   private loginHandleError(error: any): Promise<any> {
-    this.tips = "无法获取关键字数据，出现异常：" + error.response;
-    return Promise.reject(error.response || error);
+    this.tips = "无法获取关键字数据，出现异常：" + error.tip;
+    return Promise.reject(error.tip || error);
   }
 }

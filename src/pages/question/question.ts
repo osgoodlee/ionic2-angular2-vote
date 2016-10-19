@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { KeywordData } from "../../model/keyword-data";
 import { QuestionData } from "../../model/question-data";
 import { QuestionItemData } from "../../model/questionitem-data";
 import { DataService } from "../service/data-service";
+import {ResultPage} from "../result/result";
 
 
 @Component({
@@ -26,45 +27,40 @@ export class QuestionPage {
   }
 
   getQuestionData() {
-    this.http.get('http://192.168.2.111:8080/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get("id")).toPromise()
+    this.http.get('http://localhost:8080/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
       .then(response => {
         let result = response.json();
-       if (result.response == 'success') {
+        if (result.status == 'success') {
           this.questionInfo = result.data;
         } else {
           this.questionInfo = new QuestionData();
-          this.tips = "无法获取关键字数据：" + result.response;
+          this.tips = "无法获取关键字数据：" + result.tip;
         }
       })
       .catch(this.handleError);
   }
 
-
-
-  // $scope.questionInfo = {};
-  // $scope.answerRecord = {};
-
-  submitAnswer () {
+  submitAnswer() {
     if (null == this.answerItem) {
       this.tips = " 请先选择答案";
     } else {
-      this.http.get('http://192.168.31.138:8080/lisi/app/answerQuestion/'+this.dataService.loginUser.id +'/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
-      .then(response => {
-        let result = response.json();
-       if (result.response == 'success') {
-          // $state.go("tab.question-result", { questionId: $scope.questionInfo.id, result: data.result });//跳转到结果页
-        } else {
-          this.questionInfo = new QuestionData();
-          this.tips = "答题失败：" + result.response;
-        }
-      })
-      .catch(this.handleError);
-  };
+      this.http.get('http://localhost:8080/lisi/app/answerQuestion/' + this.dataService.loginUser.id + '/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
+        .then(response => {
+          let result = response.json();
+          if (result.status == 'success') {
+            this.navCtrl.push(ResultPage, { question: this.questionInfo, result: result.data });
+          } else {
+            this.questionInfo = new QuestionData();
+            this.tips = "无法回答：" + result.tip;
+          }
+        })
+        .catch(this.handleError);
+    };
   }
 
   private handleError(error: any): Promise<any> {
-    this.tips = "无法获取数据,出现异常：" + error.response;
-    return Promise.reject(error.response || error);
+    this.tips = "无法获取数据,出现异常：" + error.tip;
+    return Promise.reject(error.tip || error);
   }
 
 }
