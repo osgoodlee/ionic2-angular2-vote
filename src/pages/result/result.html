@@ -19,10 +19,10 @@
 			<p>
 				{{questionInfo.comment}}
 			</p>
-			<img class="full-image" src="http://192.168.31.138:8080{{questionInfo.picture}}">
+			<img class="full-image" src="http://192.168.2.111:8080/lisi/{{questionInfo.picture}}">
 		</div>
 
-		<div class="item tabs tabs-secondary tabs-icon-left">
+		<!--<div class="item tabs tabs-secondary tabs-icon-left">
 			<a class="tab-item" href="#">
 				<i class="icon ion-thumbsup"></i> 赞
 			</a>
@@ -32,9 +32,9 @@
 			<a class="tab-item" href="#">
 				<i class="icon ion-share"></i> 分享
 			</a>
-		</div>
-		<div class="item">
-			<button class="button button-full button-positive" (click)="goNext()">
+		</div>-->
+		<div>
+			<button full ion-button  (click)="goNext()">
           继续下一题
         </button>
 		</div>

@@ -1,17 +1,26 @@
 <ion-header>
-  <ion-navbar>
-    <ion-title>
-      Contact
-    </ion-title>
-  </ion-navbar>
+	<ion-navbar>
+		<ion-title>
+			生成数据{{tips}}
+		</ion-title>
+	</ion-navbar>
 </ion-header>
 
 <ion-content>
-  <ion-list>
-    <ion-list-header>Follow us on Twitter</ion-list-header>
-    <ion-item>
-      <ion-icon name="ionic" item-left></ion-icon>
-      @ionicframework
-    </ion-item>
-  </ion-list>
+	<ion-list>
+		<div>
+			<button full ion-button (click)="writeSource()">
+          生成数据
+        </button>
+		</div>
+    <div>
+      	<!--<ion-input *ngFor="let row of sourceList" [(ngModel)]="row"  type="text"></ion-input>-->
+        <div class="selectable" *ngFor="let row of sourceList">{{row}}</div>
+    </div>
+		<ion-list-header>元数据列表</ion-list-header>
+		<ion-item *ngFor="let item of metadataList">
+			<ion-label>{{item.columnName}}:</ion-label>
+			<ion-input [(ngModel)]="item.value" type="text"></ion-input>
+		</ion-item>
+	</ion-list>
 </ion-content>

@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { KeywordData } from "../../model/keyword-data";
 import { DataService } from "../service/data-service";
 import { QuestionPage } from "../question/question";
 import { QuestionData } from "../../model/question-data";
