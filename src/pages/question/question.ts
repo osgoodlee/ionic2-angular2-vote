@@ -23,7 +23,6 @@ export class QuestionPage {
   }
 
   ngOnInit() {
-    alert(1);
     this.questionInfo = new QuestionData();
     this.getQuestionData();
   }

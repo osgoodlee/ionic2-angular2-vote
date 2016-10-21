@@ -1,0 +1,1 @@
+GET http://localhost:8080/lisi/app/getMetaData/1 
