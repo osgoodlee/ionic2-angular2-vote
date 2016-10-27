@@ -33,6 +33,7 @@ export class QuestionPage {
         let result = response.json();
         if (result.status == 'success') {
           this.questionInfo = result.data;
+          alert('keywordid'+this.questionInfo.keywordid);
         } else {
           this.questionInfo = new QuestionData();
           this.tips = "无法获取关键字数据：" + result.tip;

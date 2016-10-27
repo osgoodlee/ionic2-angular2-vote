@@ -1,1 +1,1 @@
-GET http://localhost:8080/lisi/app/getMetaData/1 
+DELETE  http://192.168.1.231:9200/creditinfo_company/fileinfo/000000400
