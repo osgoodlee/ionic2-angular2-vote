@@ -28,12 +28,11 @@ export class QuestionPage {
   }
 
   getQuestionData() {
-    this.http.get('http://192.168.2.111:8080/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
+    this.http.get('http://114.215.169.187/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
           this.questionInfo = result.data;
-          alert('keywordid'+this.questionInfo.keywordid);
         } else {
           this.questionInfo = new QuestionData();
           this.tips = "无法获取关键字数据：" + result.tip;
@@ -46,7 +45,7 @@ export class QuestionPage {
     if (null == this.answerItem) {
       this.tips = " 请先选择答案";
     } else {
-      this.http.get('http://192.168.2.111:8080/lisi/app/answerQuestion/' + this.dataService.loginUser.id + '/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
+      this.http.get('http://114.215.169.187/lisi/app/answerQuestion/' + this.dataService.loginUser.id + '/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
         .then(response => {
           let result = response.json();
           if (result.status == 'success') {

@@ -23,7 +23,7 @@ export class ContactPage implements OnInit {
   }
 
   getMetaData() {
-    this.http.get('http://192.168.2.111:8080/lisi/app/getMetaData/1').toPromise()
+    this.http.get('http://114.215.169.187/lisi/app/getMetaData/1').toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {

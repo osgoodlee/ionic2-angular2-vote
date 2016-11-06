@@ -24,7 +24,7 @@ export class HomePage implements OnInit {
   }
 
   getKeywordData() {
-    this.http.post('http://192.168.2.111:8080/lisi/admin/setting/getKeywordAll', null).toPromise()
+    this.http.post('http://114.215.169.187/lisi/admin/setting/getKeywordAll', null).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {

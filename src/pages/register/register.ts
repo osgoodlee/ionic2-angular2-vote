@@ -27,7 +27,7 @@ export class RegisterPage implements OnInit {
 
   login() {
     var userData = { "name": this.user.name, "password": this.user.password };
-    this.http.post('http://192.168.2.111:8080/lisi/app/login', userData).toPromise()
+    this.http.post('http://114.215.169.187/lisi/app/login', userData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
@@ -44,7 +44,7 @@ export class RegisterPage implements OnInit {
   //注册用户
   register() {
     var userData = { "name": this.user.name, "password": this.user.password };
-    this.http.post('http://192.168.2.111:8080/lisi/app/registerUser', userData).toPromise()
+    this.http.post('http://114.215.169.187/lisi/app/registerUser', userData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
