@@ -28,6 +28,7 @@ export class QuestionPage {
   }
 
   getQuestionData() {
+    
     this.http.get('http://114.215.169.187/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
       .then(response => {
         let result = response.json();
