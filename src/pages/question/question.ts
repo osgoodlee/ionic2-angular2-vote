@@ -3,9 +3,9 @@ import { Http } from '@angular/http';
 import { NavController, NavParams } from 'ionic-angular';
 import { KeywordData } from "../../model/keyword-data";
 import { QuestionData } from "../../model/question-data";
-import { QuestionItemData } from "../../model/questionitem-data";
 import { DataService } from "../service/data-service";
 import {ResultPage} from "../result/result";
+import {HomePage} from "../home/home";
 
 
 @Component({
@@ -58,6 +58,10 @@ export class QuestionPage {
         })
         .catch(this.handleError);
     };
+  }
+
+  goHome() {
+   this.navCtrl.push(HomePage);
   }
 
   private handleError(error: any): Promise<any> {
