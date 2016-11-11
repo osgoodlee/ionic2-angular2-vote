@@ -29,7 +29,7 @@ export class QuestionPage {
 
   getQuestionData() {
     
-    this.http.get('http://114.215.169.187/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
+    this.http.get('http://120.76.200.75/lisi/app/getQuestion/' + this.dataService.loginUser.id + '/' + this.navParm.get('keywordid')).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
@@ -46,7 +46,7 @@ export class QuestionPage {
     if (null == this.answerItem) {
       this.tips = " 请先选择答案";
     } else {
-      this.http.get('http://114.215.169.187/lisi/app/answerQuestion/' + this.dataService.loginUser.id + '/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
+      this.http.get('http://120.76.200.75/lisi/app/answerQuestion/' + this.dataService.loginUser.id + '/' + this.questionInfo.id + '/' + this.answerItem).toPromise()
         .then(response => {
           let result = response.json();
           if (result.status == 'success') {
