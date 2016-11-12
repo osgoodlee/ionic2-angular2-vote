@@ -1,20 +1,26 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 
-import { NavController,App } from 'ionic-angular';
+import { NavController, App } from 'ionic-angular';
+import { UserData } from "../../model/user-data";
+import { DataService } from "../service/data-service";
 
 
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
 })
-export class AboutPage {
+export class AboutPage implements OnInit {
+  user: UserData;
 
-
-  constructor(public navCtrl: NavController, private app: App) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private app: App) {
 
   }
 
-  logout(){
-     this.app.getRootNav().popToRoot();
+  ngOnInit() {
+    this.user = this.dataService.loginUser;
+  }
+
+  logout() {
+    this.app.getRootNav().popToRoot();
   }
 }

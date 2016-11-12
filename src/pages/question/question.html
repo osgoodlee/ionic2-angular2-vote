@@ -21,7 +21,7 @@
 	</ion-list>
 
 	<div>
-		<button full ion-button (click)="submitAnswer()">
+		<button full ion-button (click)="submitAnswer()" *ngIf="hasQuestion">
         提交
       </button>
 	</div>

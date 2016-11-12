@@ -17,6 +17,7 @@ export class QuestionPage {
   tips: string;
   questionInfo: QuestionData;
   answerItem: number;
+  hasQuestion:boolean;
 
   constructor(public navCtrl: NavController, private dataService: DataService, private navParm: NavParams, public http: Http) {
     this.questionInfo = new QuestionData();
@@ -33,10 +34,12 @@ export class QuestionPage {
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
+          this.hasQuestion = true;
           this.questionInfo = result.data;
         } else {
+          this.hasQuestion = false;
           this.questionInfo = new QuestionData();
-          this.tips = "无法获取关键字数据：" + result.tip;
+          this.tips = "无法获取问题数据：" + result.tip;
         }
       })
       .catch(this.handleError);

@@ -52,7 +52,7 @@ export class RegisterPage implements OnInit {
           this.dataService.loginUser = result.data;
           this.navCtrl.push(TabsPage);
         } else {
-          this.registerTip = "注册失败：" + result.tip;
+          this.registerTip =  result.tip;
         }
       })
       .catch(this.registerHandleError);

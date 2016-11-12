@@ -1,4 +1,10 @@
-<ion-header>
+<!--<ion-header>
+  <ion-navbar>
+    <ion-title>
+      个人中心
+    </ion-title>
+  </ion-navbar>
+</ion-heade<ion-header>
   <ion-navbar>
     <ion-title>
       个人中心
@@ -6,20 +12,227 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding="true" has-bouncing="true">
+<ion-content padding="true" class="cards-bg social-cards">
+
+  <ion-item-group>
+    <ion-item-divider>关于我们</ion-item-divider>
+    <ion-item>  
+      <ion-label>美乐燕是一个通过答题学习知识，并获得奖励的平台xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</ion-label>
+    </ion-item>
+    <ion-item><p>每答对一题将获得0.1元的现金奖励，奖励可提现</p></ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>您的信息</ion-item-divider>
+    <ion-item>用户名：{{user.name}}</ion-item>
+    <ion-item>
+      <button ion-button block (click)="logout()">
+				退出
+			</button>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>投放广告？</ion-item-divider>
+    <ion-item>您可以通过赞助答题奖励金来投放广告，联系我们：</ion-item>
+    <ion-item>移动电话——18988997280</ion-item>
+    <ion-item>邮箱——371193656@qq.com</ion-item>
+  </ion-item-group>
+</ion-content>r>
+
+<ion-content padding="true" class="cards-bg social-cards">
+ <ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="img/marty-avatar.png">
+    </ion-avatar>
+    <h1>关于我们</h1>
+    <p>美乐燕</p>
+  </ion-item>
+  <ion-card-c<ion-header>
+  <ion-navbar>
+    <ion-title>
+      个人中心
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding="true" class="cards-bg social-cards">
+ <ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="img/marty-avatar.png">
+    </ion-avatar>
+    <h1>关于我们</h1>
+    <p>美乐燕</p>
+  </ion-item>
+  <ion-card-content>
+    <p>美乐燕是一个通过答题学习知识，并获得奖励的平台xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+    <p>每答对一题将获得0.1元的现金奖励，奖励可提现</p>
+  </ion-card-content>
+
+  <ion-row>
+    <ion-col>
+      <button primary clear small>
+        <ion-icon name="thumbs-up"></ion-icon>
+        <div>12 Likes</div>
+      </button>
+    </ion-col>
+    <ion-col>
+      <button primary clear small>
+        <ion-icon name="text"></ion-icon>
+        <div>4 Comments</div>
+      </button>
+    </ion-col>
+    <ion-col center text-center>
+      <ion-note>
+        11h ago
+      </ion-note>
+    </ion-col>
+  </ion-row>
+
+</ion-card>
+
+  <ion-item-group>
+    <ion-item-divider>关于我们</ion-item-divider>
+    <ion-item>  
+      <ion-label>美乐燕是一个通过答题学习知识，并获得奖励的平台xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</ion-label>
+    </ion-item>
+    <ion-item><p>每答对一题将获得0.1元的现金奖励，奖励可提现</p></ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>您的信息</ion-item-divider>
+    <ion-item>用户名：{{user.name}}</ion-item>
+    <ion-item>
+      <button ion-button block (click)="logout()">
+				退出
+			</button>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>投放广告？</ion-item-divider>
+    <ion-item>您可以通过赞助答题奖励金来投放广告，联系我们：</ion-item>
+    <ion-item>移动电话——18988997280</ion-item>
+    <ion-item>邮箱——371193656@qq.com</ion-item>
+  </ion-item-group>
+</ion-content>ontent>
+    <p>美乐燕是一个通过答题学习知识，并获得奖励的平台xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+    <p>每答对一题将获得0.1元的现金奖励，奖励可提现</p>
+  </ion-card-content>
 
 
+</ion-card>
 
-  <div class="header">
-    <br />APP名字
-  </div>
-  <div class="content">
-    <div class="main">
-      <br /><br /> 答题即可获得奖励
-      <p>广告投放请联系QQ：<a href="" target="_blank">*******</a></p>
-    </div>
-  </div>
-  <div class="footer">
-    邮箱：496700939@qq.com
-  </div>
+  <ion-item-group>
+    <ion-item-divider>关于我们</ion-item-divider>
+    <ion-item>  
+      <ion-label>美乐燕是一个通过答题学习知识，并获得奖励的平台xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</ion-label>
+    </ion-item>
+    <ion-item><p>每答对一题将获得0.1元的现金奖励，奖励可提现</p></ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>您的信息</ion-item-divider>
+    <ion-item>用户名：{{user.name}}</ion-item>
+    <ion-item>
+      <button ion-button block (click)="logout()">
+				退出
+			</button>
+    </ion-item>
+  </ion-item-group>
+  <ion-item-group>
+    <ion-item-divider light>投放广告？</ion-item-divider>
+    <ion-item>您可以通过赞助答题奖励金来投放广告，联系我们：</ion-item>
+    <ion-item>移动电话——18988997280</ion-item>
+    <ion-item>邮箱——371193656@qq.com</ion-item>
+  </ion-item-group>
+</ion-content>-->
+
+<ion-header>
+  <ion-navbar>
+    <ion-title>个人中心</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="cards-bg social-cards">
+
+<ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <img src="assets/icon/bird_1.jpg">
+    </ion-avatar>
+    <h2>关于我们</h2>
+    <p>小燕子飞呀飞</p>
+  </ion-item>
+
+  <ion-card-content>
+    <p class="content">&nbsp;&nbsp;&nbsp;&nbsp;美乐燕是一个通过答题学习知识，并获得奖励的平台</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;每答对一题将获得0.1元的现金奖励，奖励可提现</p>
+  </ion-card-content>
+
+</ion-card>
+
+
+<ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+     <ion-icon name="man"></ion-icon>
+    </ion-avatar>
+    <h2>您的信息</h2>
+    <p>用户名：{{user.name}}</p>
+  </ion-item>
+
+  <ion-card-content>
+    <button ion-button block (click)="logout()">
+				退出
+		</button>
+  </ion-card-content>
+
+  <ion-row>
+    <ion-col>
+      <button ion-button color="primary" clear small icon-left>
+         <ion-icon name="school"></ion-icon>
+        10 今日答题
+      </button>
+    </ion-col>
+    <ion-col>
+      <button ion-button color="primary" clear small icon-left>
+        <ion-icon name="ribbon"></ion-icon>
+        5  获得奖励
+      </button>
+    </ion-col>
+    <ion-col center text-center>
+      <ion-note>
+        30 累计答题
+      </ion-note>
+    </ion-col>
+  </ion-row>
+
+</ion-card>
+
+
+<ion-card>
+
+  <ion-item>
+    <ion-avatar item-left>
+      <ion-icon name="paper-plane"></ion-icon>
+    </ion-avatar>
+    <h2>投放广告</h2>
+    <p>您可以通过赞助答题奖励金来投放广告</p>
+  </ion-item>
+  <ion-card-content>
+    <p>移动电话——18988997280</p>
+    <p>邮箱——371193656@qq.com</p>
+  </ion-card-content>
+  <img src="assets/img/bird_1.jpg">
+</ion-card>
+
+
 </ion-content>
+
+<style>
+  .social-cards ion-col {
+    padding: 0;
+  }
+</style>

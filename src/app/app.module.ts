@@ -6,6 +6,7 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
+import { ExtractPage } from '../pages/extract/extract';
 import { HomePage } from '../pages/home/home';
 import { QuestionPage } from '../pages/question/question';
 import { ResultPage } from '../pages/result/result';
@@ -19,6 +20,7 @@ import { DataService } from '../pages/service/data-service';
     MyApp,
     AboutPage,
     ContactPage,
+    ExtractPage,
     HomePage,
     RegisterPage,
     QuestionPage,
@@ -33,6 +35,7 @@ import { DataService } from '../pages/service/data-service';
     MyApp,
     AboutPage,
     ContactPage,
+    ExtractPage,
     HomePage,
     QuestionPage,
     ResultPage,
