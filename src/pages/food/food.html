@@ -1,0 +1,26 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>美食</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<h2>一城一味 {{tips}}</h2>
+	<!--<div class="grid grid-pad">
+		<div *ngFor="let keyword of keywordList" (click)="beginAnswer(keyword)" class="col-1-3">
+			<div class="module hero">
+				 {{keyword.name}}
+			</div>
+		</div>
+	</div>-->
+	<ion-list>
+		<ion-item>
+			<ion-thumbnail item-left>
+				<img src="assets/img/food.jpg">
+			</ion-thumbnail>
+			<h2>冰火菠萝油</h2>
+			<p>菠萝包与黄油的完美结合</p>
+			<button clear item-right (click)="seeDetail('test')">详情</button>
+		</ion-item>
+	</ion-list>
+</ion-content>

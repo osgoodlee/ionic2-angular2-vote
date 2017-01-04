@@ -6,6 +6,7 @@ import { NavController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { UserData } from "../../model/user-data";
 import { TabsPage } from '../tabs/tabs';
+import { Geolocation, FileChooser } from 'ionic-native';
 
 
 @Component({
@@ -23,9 +24,20 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  getGeographic() {
+    // FileChooser.open().then(uri => alert(uri)).catch(e => alert(e));
+    Geolocation.getCurrentPosition().then((resp) => {
+      alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
+    }).catch((error) => {
+      alert('Error getting location' + error);
+    });
   }
 
   login() {
+    // this.getGeographic();
     var userData = { "name": this.user.name, "password": this.user.password };
     this.http.post('http://120.76.200.75/lisi/app/login', userData).toPromise()
       .then(response => {
@@ -52,7 +64,7 @@ export class RegisterPage implements OnInit {
           this.dataService.loginUser = result.data;
           this.navCtrl.push(TabsPage);
         } else {
-          this.registerTip =  result.tip;
+          this.registerTip = result.tip;
         }
       })
       .catch(this.registerHandleError);

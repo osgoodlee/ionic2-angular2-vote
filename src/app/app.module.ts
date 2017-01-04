@@ -8,6 +8,8 @@ import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { ExtractPage } from '../pages/extract/extract';
 import { HomePage } from '../pages/home/home';
+import { FoodPage } from '../pages/food/food';
+import { FoodViewPage } from '../pages/foodview/foodview';
 import { QuestionPage } from '../pages/question/question';
 import { ResultPage } from '../pages/result/result';
 import { RegisterPage } from '../pages/register/register';
@@ -22,6 +24,8 @@ import { DataService } from '../pages/service/data-service';
     ContactPage,
     ExtractPage,
     HomePage,
+    FoodPage,
+    FoodViewPage,
     RegisterPage,
     QuestionPage,
     ResultPage,
@@ -37,6 +41,8 @@ import { DataService } from '../pages/service/data-service';
     ContactPage,
     ExtractPage,
     HomePage,
+    FoodPage,
+    FoodViewPage,
     QuestionPage,
     ResultPage,
     RegisterPage,
