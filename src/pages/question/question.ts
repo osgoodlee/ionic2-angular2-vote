@@ -5,7 +5,6 @@ import { KeywordData } from "../../model/keyword-data";
 import { QuestionData } from "../../model/question-data";
 import { DataService } from "../service/data-service";
 import {ResultPage} from "../result/result";
-import {HomePage} from "../home/home";
 
 
 @Component({
@@ -63,13 +62,15 @@ export class QuestionPage {
     };
   }
 
-  goHome() {
-   this.navCtrl.push(HomePage);
-  }
 
   private handleError(error: any): Promise<any> {
     this.tips = "无法获取数据,出现异常：" + error.tip;
     return Promise.reject(error.tip || error);
   }
+
+   goHome(){
+    
+  }
+
 
 }

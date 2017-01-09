@@ -1,0 +1,17 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>美图</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-list>
+		<ion-item *ngFor="let jokeCategoryItem of jokeCategoryList">
+			<ion-thumbnail item-left>
+				<img src="{{jokeCategoryItem.thumb}}" alt="{{jokeCategoryItem.name}}">
+			</ion-thumbnail>
+			<p>{{jokeCategoryItem.name}}</p>
+			<button ion-button clear item-right (click)="browser(jokeCategoryItem)">查看</button>
+		</ion-item>
+	</ion-list>
+</ion-content>

@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { QuestionPage } from "../question/question";
 import { QuestionData } from "../../model/question-data";
-import {HomePage} from "../home/home";
 
 @Component({
   selector: 'page-foodview',
@@ -26,8 +25,9 @@ export class FoodViewPage {
     this.navCtrl.push(QuestionPage, { 'keywordid': this.questionInfo.keywordid });//跳转到答题页
   };
 
-   goHome() {
-   this.navCtrl.push(HomePage);
+  goHome(){
+    
   }
+
 
 }

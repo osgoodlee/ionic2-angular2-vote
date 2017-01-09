@@ -3,7 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { QuestionPage } from "../question/question";
 import { QuestionData } from "../../model/question-data";
-import {HomePage} from "../home/home";
+import {WordPage} from "../word/word";
 
 @Component({
   selector: 'page-result',
@@ -27,7 +27,7 @@ export class ResultPage {
   };
 
    goHome() {
-   this.navCtrl.push(HomePage);
+   this.navCtrl.push(WordPage);
   }
 
 }

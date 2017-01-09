@@ -4,11 +4,11 @@ import { HttpModule }    from '@angular/http';
 import { FormsModule }   from '@angular/forms';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
-import { AboutPage } from '../pages/about/about';
+import { PicturePage } from '../pages/picture/picture';
 import { ContactPage } from '../pages/contact/contact';
 import { ExtractPage } from '../pages/extract/extract';
-import { HomePage } from '../pages/home/home';
-import { FoodPage } from '../pages/food/food';
+import { PictureHomePage } from '../pages/picturehome/picturehome';
+import { WordPage } from '../pages/word/word';
 import { FoodViewPage } from '../pages/foodview/foodview';
 import { QuestionPage } from '../pages/question/question';
 import { ResultPage } from '../pages/result/result';
@@ -20,11 +20,11 @@ import { DataService } from '../pages/service/data-service';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    WordPage,
     ContactPage,
     ExtractPage,
-    HomePage,
-    FoodPage,
+    PicturePage,
+    PictureHomePage,
     FoodViewPage,
     RegisterPage,
     QuestionPage,
@@ -37,11 +37,11 @@ import { DataService } from '../pages/service/data-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    WordPage,
     ContactPage,
     ExtractPage,
-    HomePage,
-    FoodPage,
+    PicturePage,
+    PictureHomePage,
     FoodViewPage,
     QuestionPage,
     ResultPage,
