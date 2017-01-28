@@ -1,0 +1,40 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{selectedJokeCategory.name}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+
+	<ion-card *ngFor="let jokeItem of jokeList">
+		<ion-card-content>
+			<h5>{{jokeItem.name}}</h5>
+			<video width="100%" src="{{jokeItem.content}}" controls="controls">
+			</video>
+		</ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button color="primary" clear small icon-left>
+         <ion-icon name="bookmark"></ion-icon>
+        10 喜欢
+      </button>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" clear small icon-left>
+        <ion-icon name="chatboxes"></ion-icon>
+        5  评论
+      </button>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+          <ion-icon name="cloudy"></ion-icon>
+          分享
+           </button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+
+
+</ion-content>

@@ -6,12 +6,12 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { PicturePage } from '../pages/picture/picture';
 import { ContactPage } from '../pages/contact/contact';
-import { ExtractPage } from '../pages/extract/extract';
+import { VideoHomePage } from '../pages/videohome/videohome';
 import { PictureHomePage } from '../pages/picturehome/picturehome';
 import { WordPage } from '../pages/word/word';
 import { FoodViewPage } from '../pages/foodview/foodview';
 import { QuestionPage } from '../pages/question/question';
-import { ResultPage } from '../pages/result/result';
+import { VideoPage } from '../pages/video/video';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DataService } from '../pages/service/data-service';
@@ -22,13 +22,13 @@ import { DataService } from '../pages/service/data-service';
     MyApp,
     WordPage,
     ContactPage,
-    ExtractPage,
+    VideoHomePage,
     PicturePage,
     PictureHomePage,
     FoodViewPage,
     RegisterPage,
     QuestionPage,
-    ResultPage,
+    VideoPage,
     TabsPage
   ],
   imports: [
@@ -39,12 +39,12 @@ import { DataService } from '../pages/service/data-service';
     MyApp,
     WordPage,
     ContactPage,
-    ExtractPage,
+    VideoHomePage,
     PicturePage,
     PictureHomePage,
     FoodViewPage,
     QuestionPage,
-    ResultPage,
+    VideoPage,
     RegisterPage,
     TabsPage
   ],

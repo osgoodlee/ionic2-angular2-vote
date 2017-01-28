@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { PictureHomePage } from '../picturehome/picturehome';
 import { WordPage } from '../word/word';
 import { ContactPage } from '../contact/contact';
-import { ExtractPage } from '../extract/extract';
+import { VideoHomePage } from '../videohome/videohome';
 
 @Component({
   templateUrl: 'tabs.html'
@@ -13,7 +13,7 @@ export class TabsPage {
   // should be each tab's root Page
   tab1Root: any = WordPage;
   tab2Root: any = PictureHomePage;
-  tab3Root: any = ExtractPage;
+  tab3Root: any = VideoHomePage;
   tab4Root: any = ContactPage;
 
   constructor() {

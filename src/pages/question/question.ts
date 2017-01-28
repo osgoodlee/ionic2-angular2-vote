@@ -4,7 +4,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { KeywordData } from "../../model/keyword-data";
 import { QuestionData } from "../../model/question-data";
 import { DataService } from "../service/data-service";
-import {ResultPage} from "../result/result";
 
 
 @Component({
@@ -52,7 +51,6 @@ export class QuestionPage {
         .then(response => {
           let result = response.json();
           if (result.status == 'success') {
-            this.navCtrl.push(ResultPage, { question: this.questionInfo, result: result.data });
           } else {
             this.questionInfo = new QuestionData();
             this.tips = "无法回答：" + result.tip;

@@ -33,8 +33,8 @@
     </ion-row>
   </ion-card>-->
   <ion-refresher (ionRefresh)="doRefresh($event)">
-		<ion-refresher-content></ion-refresher-content>
-	</ion-refresher>
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
 
   <ion-card *ngFor="let jokeItem of jokeList">
     <ion-card-content>
@@ -44,25 +44,26 @@
     <ion-row>
       <ion-col>
         <button ion-button color="primary" clear small icon-left>
-         <ion-icon name="school"></ion-icon>
+         <ion-icon name="bookmark"></ion-icon>
         10 喜欢
       </button>
       </ion-col>
       <ion-col>
         <button ion-button color="primary" clear small icon-left>
-        <ion-icon name="ribbon"></ion-icon>
+        <ion-icon name="chatboxes"></ion-icon>
         5  评论
       </button>
       </ion-col>
       <ion-col center text-center>
-        <ion-note>
+        <button ion-button color="primary" clear small icon-left>
+          <ion-icon name="cloudy"></ion-icon>
           分享
-        </ion-note>
+           </button>
       </ion-col>
     </ion-row>
   </ion-card>
-  
+
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-		<ion-infinite-scroll-content></ion-infinite-scroll-content>
-	</ion-infinite-scroll>
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>

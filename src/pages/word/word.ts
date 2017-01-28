@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App } from 'ionic-angular';
+import { NavController, App, Platform } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJoke } from "../../model/TJoke";
-import { FoodViewPage } from "../foodview/foodview";
+import { NativeStorage, Geolocation, Device } from 'ionic-native';
 
 
 @Component({
@@ -15,11 +15,42 @@ export class WordPage implements OnInit {
 
   jokeList: TJoke[] = new Array<TJoke>();
   tips: string;
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App) {
+  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App, public platform: Platform) {
 
   }
 
+  getGeographic() {
+    Geolocation.getCurrentPosition().then((resp) => {
+      alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
+    }).catch((error) => {
+      alert('Error getting location' + error);
+    });
+  }
+
   ngOnInit() {
+    this.platform.ready().then(() => {
+      this.getGeographic();
+      NativeStorage.getItem('myitem')
+        .then(
+        data => {
+          if (data != null) {
+
+          } else {
+            NativeStorage.setItem('myitem', { id: '' + Device.device.uuid, value: 'king' })
+              .then(
+              () => alert('Stored item!'),
+              error => alert('Error storing item' + error)
+              );
+          }
+          this.tips = data.id;
+        },
+        error => {
+          this.tips = error;
+        }
+        );
+    });
+
+
     // this.getTJokeData();
     let tmp1 = new TJoke();
     tmp1.id = 1;
@@ -69,7 +100,7 @@ export class WordPage implements OnInit {
   }
 
   seeDetail(keyword: string) {
-    this.navCtrl.push(FoodViewPage, { 'keywordid': keyword });
+    // this.navCtrl.push(FoodViewPage, { 'keywordid': keyword });
   }
 
   private requestHandleError(error: any): Promise<any> {

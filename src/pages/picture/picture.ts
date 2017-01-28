@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
 
 import { NavController, App, NavParams } from 'ionic-angular';
 import { UserData } from "../../model/user-data";
@@ -13,10 +14,14 @@ import { DataService } from "../service/data-service";
 })
 export class PicturePage implements OnInit {
   user: UserData;
+  tips: string;
+  dataCount : number = 0; //已加载数据数量
+  refreshTime : Date = new Date(); //刷新时间
+  initialTime : Date = new Date(); //初始加载时间
   selectedJokeCategory: TJokeCategory;
   jokeList: TJoke[] = new Array<TJoke>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams, public http: Http) {
 
   }
 
@@ -54,6 +59,27 @@ export class PicturePage implements OnInit {
     this.jokeList.push(tmp6);
     // this.user = this.dataService.loginUser;
   }
+
+  getMorePictureData() {
+    this.http.post('http://120.76.200.75/lisi/admin/setting/getKeywordAll', null).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          if (result.sucflag == true) {
+            this.jokeList = result.rows;
+          } else {
+            this.tips = "无法获取分类数据：" + result.tip;
+          }
+        } else {
+          this.tips = "无法获取分类数据：" + result.tip;
+        }
+      })
+      .catch(this.requestHandleError);
+  }
+
+  getNewPictureData() {
+  }
+
 
   doRefresh(refresher) {
     setTimeout(() => {
@@ -111,5 +137,10 @@ export class PicturePage implements OnInit {
     // this.jokeList.push(tmp4);
     this.jokeList.push(tmp5);
     this.jokeList.push(tmp6);
+  }
+
+  private requestHandleError(error: any): Promise<any> {
+    this.tips = "无法获取分类数据，出现异常：" + error.tip;
+    return Promise.reject(error.tip || error);
   }
 }

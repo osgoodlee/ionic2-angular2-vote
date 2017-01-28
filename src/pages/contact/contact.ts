@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { NavController } from 'ionic-angular';
+import { NativeStorage } from 'ionic-native';
 
 @Component({
   selector: 'page-contact',
@@ -19,7 +20,13 @@ export class ContactPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getMetaData();
+    // NativeStorage.setItem('myitem', { name: 'lisi', value: 'king' })
+    //   .then(
+    //   () => alert('Stored item!'),
+    //   error => alert('Error storing item'+error)
+    //   );
+    
+    // this.getMetaData();
   }
 
   getMetaData() {
