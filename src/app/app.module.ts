@@ -9,7 +9,7 @@ import { ContactPage } from '../pages/contact/contact';
 import { VideoHomePage } from '../pages/videohome/videohome';
 import { PictureHomePage } from '../pages/picturehome/picturehome';
 import { WordPage } from '../pages/word/word';
-import { FoodViewPage } from '../pages/foodview/foodview';
+import { CommentPage } from '../pages/comment/comment';
 import { QuestionPage } from '../pages/question/question';
 import { VideoPage } from '../pages/video/video';
 import { RegisterPage } from '../pages/register/register';
@@ -25,7 +25,7 @@ import { DataService } from '../pages/service/data-service';
     VideoHomePage,
     PicturePage,
     PictureHomePage,
-    FoodViewPage,
+    CommentPage,
     RegisterPage,
     QuestionPage,
     VideoPage,
@@ -42,7 +42,7 @@ import { DataService } from '../pages/service/data-service';
     VideoHomePage,
     PicturePage,
     PictureHomePage,
-    FoodViewPage,
+    CommentPage,
     QuestionPage,
     VideoPage,
     RegisterPage,

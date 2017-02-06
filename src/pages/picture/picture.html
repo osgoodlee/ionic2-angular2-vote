@@ -38,20 +38,20 @@
 
   <ion-card *ngFor="let jokeItem of jokeList">
     <ion-card-content>
-      <h5>{{jokeItem.name}}</h5>
+      <h5>{{jokeItem.title}}</h5>
       <div [innerHTML]="jokeItem.content"></div>
     </ion-card-content>
     <ion-row>
       <ion-col>
-        <button ion-button color="primary" clear small icon-left>
+        <button ion-button color="primary" (click)="likeIt(jokeItem)" clear small icon-left>
          <ion-icon name="bookmark"></ion-icon>
-        10 喜欢
+         {{jokeItem.praiseNum}}  喜欢
       </button>
       </ion-col>
       <ion-col>
-        <button ion-button color="primary" clear small icon-left>
+        <button ion-button color="primary" (click)="commentIt(jokeItem)" clear small icon-left>
         <ion-icon name="chatboxes"></ion-icon>
-        5  评论
+         {{jokeItem.commentNum}}  评论
       </button>
       </ion-col>
       <ion-col center text-center>

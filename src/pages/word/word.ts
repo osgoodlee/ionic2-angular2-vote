@@ -4,8 +4,9 @@ import { Http } from '@angular/http';
 import { NavController, App, Platform } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJoke } from "../../model/TJoke";
-import { NativeStorage, Geolocation, Device } from 'ionic-native';
-
+import { UserData } from "../../model/user-data";
+import { NativeStorage,Device } from 'ionic-native';
+import { CommentPage } from "../comment/comment";
 
 @Component({
   selector: 'page-word',
@@ -14,105 +15,120 @@ import { NativeStorage, Geolocation, Device } from 'ionic-native';
 export class WordPage implements OnInit {
 
   jokeList: TJoke[] = new Array<TJoke>();
+  selectedJoke: TJoke;
+  pageCount: number = 1; //已加载分页数量
   tips: string;
   constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App, public platform: Platform) {
 
   }
 
-  getGeographic() {
-    Geolocation.getCurrentPosition().then((resp) => {
-      alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
-    }).catch((error) => {
-      alert('Error getting location' + error);
-    });
-  }
+  // getGeographic() {
+  //   Geolocation.getCurrentPosition().then((resp) => {
+  //     alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
+  //   }).catch((error) => {
+  //     alert('Error getting location' + error);
+  //   });
+  // }
+
+
+
+
 
   ngOnInit() {
-    this.platform.ready().then(() => {
-      this.getGeographic();
-      NativeStorage.getItem('myitem')
-        .then(
-        data => {
-          if (data != null) {
 
-          } else {
-            NativeStorage.setItem('myitem', { id: '' + Device.device.uuid, value: 'king' })
-              .then(
-              () => alert('Stored item!'),
-              error => alert('Error storing item' + error)
-              );
+      // Device.device.uuid
+      this.platform.ready().then(() => {
+        alert(Device.uuid);
+        NativeStorage.getItem('myitemddd')
+          .then(
+          data => {
+            alert('success');
+            if (data != null) {
+              this.dataService.isLogin = true;
+              this.dataService.loginUser = new UserData();
+              this.dataService.loginUser.id = data.id;
+              this.dataService.loginUser.deviceCode = data.deviceCode;
+            }
+            else {
+              this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
+                .then(response => {
+                  let result = response.json();
+                  if (result.status == 'success') {
+                    this.dataService.loginUser = new UserData();
+                    this.dataService.loginUser.id = data.id;
+                    this.dataService.loginUser.deviceCode = Device.uuid;
+                    NativeStorage.setItem('myitemddd', { id: '' + result.data.id, deviceCode: Device.uuid })
+                      .then(
+                      () => { this.tips = this.dataService.loginUser.id.toString(); },
+                      error => alert('Error storing item' + error)
+                      );
+                  } else {
+                    this.tips = "无法获取段子数据：" + result.tip;
+                  }
+                })
+                .catch(this.requestHandleError);
+            }
+          },
+          error => {
+            alert('无法读取本地数据:'+error.exception);
           }
-          this.tips = data.id;
-        },
-        error => {
-          this.tips = error;
-        }
-        );
-    });
+          );
+      });
 
-
-    // this.getTJokeData();
-    let tmp1 = new TJoke();
-    tmp1.id = 1;
-    tmp1.name = '洛克菲勒：';
-    tmp1.content = '<p>I was early taught to work as well as play, My life has been one long, happy holiday; Full of work and full of play- I	dropped the worry on the way- And God was good to me everyday.</p>';
-    let tmp2 = new TJoke();
-    tmp2.id = 1;
-    tmp2.name = '我不自觉捂紧了口袋里的钱包……：';
-    tmp2.content = '<p>公交车上，上来一美女，那么多空位置，她却偏偏坐在了我旁边，辣麽近距离的坐着。脸微微一红，心里头像一万头小鹿在撞……然后…我不自觉捂紧了口袋里的钱包…….</p>';
-    let tmp3 = new TJoke();
-    tmp3.id = 1;
-    tmp3.name = '又把鸡腿炸糊了：';
-    tmp3.content = '<p>哥嫂出差，昨晚我带着十岁的侄儿去上补习班，出门前我妈答应侄儿，给他炸鸡腿做宵夜，并让我们回来前打个电话，好乘热吃。 当我们回来后，见到刚出锅，热气腾腾的面条时，侄儿摇了摇头，开口说道：看来奶奶又把鸡腿炸糊了！</p>';
-    let tmp4 = new TJoke();
-    tmp4.id = 1;
-    tmp4.name = '我咋感觉自己被调戏了。。。。。。';
-    tmp4.content = '<p>初一地理考试，有道考题是“非洲贫穷落后的根本原因是什么?” 大部分学生回答的都不错，突然看见一张试卷上写着“胸不发达”～～ 然后我找到这个学生做思想工作，他憋的满面通红的给我说，“老师，不好意思啊，我眼花写错了......” “我本来想写 脑不发达 的......” 嚓，我咋感觉自己被调戏了.......</p>';
-    let tmp5 = new TJoke();
-    tmp5.id = 1;
-    tmp5.name = '发现我家多了一件种小麦用的木耧：';
-    tmp5.content = '<p>小时候，爸爸要去镇上买楼，可把我高兴坏了!在那个漫长等待的上午，我已无心学习，在学校里，逢人便于他分享我的喜悦，同学们都投来羡慕的目光。 中午，当放学铃声刚响起，我便飞奔回家，发现我家多了一件种小麦用的木耧.</p>';
-
-    this.jokeList.push(tmp1);
-    this.jokeList.push(tmp2);
-    this.jokeList.push(tmp3);
-    this.jokeList.push(tmp4);
-    this.jokeList.push(tmp5);
+    this.getMoreJokeData(0);
   }
 
-  getTJokeData() {
-    this.http.post('http://120.76.200.75/lisi/admin/setting/getKeywordAll', null).toPromise()
+  getMoreJokeData(categoryId: number) {
+    var jokeData = { "userId": 1, "pageNo": this.pageCount, "type": 1, "size": 5 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
-          if (result.sucflag == true) {
-            for (let row of result.rows) {
-              this.jokeList.push(row);
-            }
-          } else {
-            this.tips = "无法获取类型数据：" + result.tip;
+          for (let entry of result.data) {
+            this.jokeList.push(entry);
           }
+          this.pageCount++;
         } else {
-          this.tips = "无法获取类型数据：" + result.tip;
+          if (null != result.tip) {
+            this.tips = "无法获取段子数据：" + result.tip;
+          }
         }
       })
       .catch(this.requestHandleError);
   }
 
-  seeDetail(keyword: string) {
-    // this.navCtrl.push(FoodViewPage, { 'keywordid': keyword });
+  getNewJokeData() {
+
+  }
+
+  likeIt(jokeItem: TJoke) {
+    this.selectedJoke = jokeItem;
+    var jokePraiseData = { "userId": 1, "jokeId": jokeItem.id };
+    this.http.post(this.dataService.serverURL + 'joke/saveJokePraise', jokePraiseData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result == 'success') {
+          this.selectedJoke.praiseNum++;
+        } else {
+          if (null != result.tip) {
+            alert(this.tips);
+          }
+        }
+      })
+      .catch(this.requestHandleError);
+  }
+
+  commentIt(jokeItem: TJoke) {
+    this.navCtrl.push(CommentPage, { 'selectedJoke': jokeItem });
   }
 
   private requestHandleError(error: any): Promise<any> {
-    this.tips = "无法获取类型数据：" + error.tip;
+    this.tips = error.tip;
     return Promise.reject(error.tip || error);
   }
 
   doRefresh(refresher) {
     setTimeout(() => {
-      // for (var i = this.jokeList.length; i > 0; i--) {
-      //   this.jokeList.pop();
-      // }
       let jokeListTmp: TJoke[] = new Array<TJoke>();
       let tmp5 = new TJoke();
       tmp5.id = 1;
@@ -128,39 +144,9 @@ export class WordPage implements OnInit {
   doInfinite(infiniteScroll) {
 
     setTimeout(() => {
-      this.getMore();
-
+      this.getMoreJokeData(0);
       infiniteScroll.complete();
-    }, 500);
+    }, 1000);
   }
 
-  getMore() {
-    // getKeywordData();
-    let tmp1 = new TJoke();
-    tmp1.id = 1;
-    tmp1.name = '洛克菲勒：';
-    tmp1.content = '<p>I was early taught to work as well as play, My life has been one long, happy holiday; Full of work and full of play- I	dropped the worry on the way- And God was good to me everyday.</p>';
-    let tmp2 = new TJoke();
-    tmp2.id = 1;
-    tmp2.name = '我不自觉捂紧了口袋里的钱包……：';
-    tmp2.content = '<p>公交车上，上来一美女，那么多空位置，她却偏偏坐在了我旁边，辣麽近距离的坐着。脸微微一红，心里头像一万头小鹿在撞……然后…我不自觉捂紧了口袋里的钱包…….</p>';
-    let tmp3 = new TJoke();
-    tmp3.id = 1;
-    tmp3.name = '又把鸡腿炸糊了：';
-    tmp3.content = '<p>哥嫂出差，昨晚我带着十岁的侄儿去上补习班，出门前我妈答应侄儿，给他炸鸡腿做宵夜，并让我们回来前打个电话，好乘热吃。 当我们回来后，见到刚出锅，热气腾腾的面条时，侄儿摇了摇头，开口说道：看来奶奶又把鸡腿炸糊了！</p>';
-    let tmp4 = new TJoke();
-    tmp4.id = 1;
-    tmp4.name = '我咋感觉自己被调戏了。。。。。。';
-    tmp4.content = '<p>初一地理考试，有道考题是“非洲贫穷落后的根本原因是什么?” 大部分学生回答的都不错，突然看见一张试卷上写着“胸不发达”～～ 然后我找到这个学生做思想工作，他憋的满面通红的给我说，“老师，不好意思啊，我眼花写错了......” “我本来想写 脑不发达 的......” 嚓，我咋感觉自己被调戏了.......</p>';
-    let tmp5 = new TJoke();
-    tmp5.id = 1;
-    tmp5.name = '发现我家多了一件种小麦用的木耧：';
-    tmp5.content = '<p>小时候，爸爸要去镇上买楼，可把我高兴坏了!在那个漫长等待的上午，我已无心学习，在学校里，逢人便于他分享我的喜悦，同学们都投来羡慕的目光。 中午，当放学铃声刚响起，我便飞奔回家，发现我家多了一件种小麦用的木耧.</p>';
-
-    this.jokeList.push(tmp1);
-    this.jokeList.push(tmp2);
-    this.jokeList.push(tmp3);
-    this.jokeList.push(tmp4);
-    this.jokeList.push(tmp5);
-  }
 }

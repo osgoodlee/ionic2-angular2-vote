@@ -21,23 +21,11 @@ export class PictureHomePage implements OnInit {
   }
 
   ngOnInit() {
-    // let tmp1 = new TJokeCategory();
-    // tmp1.id = 1;
-    // tmp1.name = '美女动态图';
-    // tmp1.thumb = 'http://img4.imgtn.bdimg.com/it/u=262044375,3714853663&fm=21&gp=0.jpg';
-    // tmp1.type = 1;
-    // let tmp2 = new TJokeCategory();
-    // tmp2.id = 2;
-    // tmp2.name = '美腿';
-    // tmp2.thumb = 'http://i3.shouyou.itc.cn/2014/news/2014/06/04/z2.jpg';
-    // tmp2.type = 2;
-    // this.jokeCategoryList.push(tmp1);
-    // this.jokeCategoryList.push(tmp2);
     this.getPictureTypeData();
   }
 
   getPictureTypeData() {
-    this.http.get('http://192.168.31.212:8080/lisi/joke/getJokeCategoryList/2').toPromise()
+    this.http.get(this.dataService.serverURL + 'joke/getJokeCategoryList/2').toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
@@ -51,9 +39,6 @@ export class PictureHomePage implements OnInit {
       .catch(this.requestHandleError);
   }
 
-  // browser(keyword: KeywordData) {
-  //   this.navCtrl.push(QuestionPage, { 'keywordid': keyword.id });
-  // }
   browser(selectedItem: TJokeCategory) {
     this.navCtrl.push(PicturePage, { 'selectedJokeCategory': selectedItem });
   }

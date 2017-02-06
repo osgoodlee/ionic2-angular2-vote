@@ -10,7 +10,7 @@
 	<ion-list>
 		<ion-item *ngFor="let jokeCategoryItem of jokeCategoryList">
 			<ion-thumbnail item-left>
-				<img src="{{jokeCategoryItem.thumb}}" alt="{{jokeCategoryItem.name}}">
+				<img src="http://192.168.31.212:8080/lisi{{jokeCategoryItem.thumb}}" alt="{{jokeCategoryItem.name}}">
 			</ion-thumbnail>
 			<p>{{jokeCategoryItem.name}}</p>
 			<button ion-button clear item-right (click)="browser(jokeCategoryItem)">查看</button>

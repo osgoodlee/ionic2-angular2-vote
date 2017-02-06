@@ -9,5 +9,6 @@ export class UserData{
   public createtime: string;
   public logintime: string;
   public status: number;
+  public deviceCode: string;
   constructor() { }
 }

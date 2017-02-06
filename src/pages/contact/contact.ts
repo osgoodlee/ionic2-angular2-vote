@@ -20,9 +20,9 @@ export class ContactPage implements OnInit {
   }
 
   ngOnInit() {
-    // NativeStorage.setItem('myitem', { name: 'lisi', value: 'king' })
+    // NativeStorage.remove('myitem')
     //   .then(
-    //   () => alert('Stored item!'),
+    //   () => alert('delete item!'),
     //   error => alert('Error storing item'+error)
     //   );
     

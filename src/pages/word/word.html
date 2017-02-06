@@ -10,16 +10,30 @@
 	</ion-refresher>
 	<ion-card *ngFor="let jokeItem of jokeList">
 		<ion-card-content>
-			<h2>{{jokeItem.name}}</h2>
+			<h2>{{jokeItem.title}}</h2>
 			<div [innerHTML]="jokeItem.content"></div>
 		</ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button color="primary" (click)="likeIt(jokeItem)" clear small icon-left>
+         <ion-icon name="bookmark"></ion-icon>
+         {{jokeItem.praiseNum}}  喜欢
+      </button>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" (click)="commentIt(jokeItem)"  clear small icon-left>
+        <ion-icon name="chatboxes"></ion-icon>
+         {{jokeItem.commentNum}}  评论
+      </button>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+          <ion-icon name="cloudy"></ion-icon>
+          分享
+           </button>
+			</ion-col>
+		</ion-row>
 	</ion-card>
-	<!--<ion-card>
-		<ion-card-content>
-			<h2>发现我家多了一件种小麦用的木耧：</h2>
-			<p>小时候，爸爸要去镇上买楼，可把我高兴坏了!在那个漫长等待的上午，我已无心学习，在学校里，逢人便于他分享我的喜悦，同学们都投来羡慕的目光。 中午，当放学铃声刚响起，我便飞奔回家，发现我家多了一件种小麦用的木耧。</p>
-		</ion-card-content>
-	</ion-card>-->
 	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
 		<ion-infinite-scroll-content></ion-infinite-scroll-content>
 	</ion-infinite-scroll>

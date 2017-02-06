@@ -5,13 +5,13 @@ import { QuestionPage } from "../question/question";
 import { QuestionData } from "../../model/question-data";
 
 @Component({
-  selector: 'page-foodview',
-  templateUrl: 'foodview.html'
+  selector: 'page-comment',
+  templateUrl: 'comment.html'
 })
-export class FoodViewPage {
+export class CommentPage {
   questionInfo: QuestionData;
   answerResult: boolean;
-  // tips: string;
+  tips: string;
 
   constructor(public navCtrl: NavController, private dataService: DataService, private navParm: NavParams) {
   }
