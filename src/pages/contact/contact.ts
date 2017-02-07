@@ -20,13 +20,7 @@ export class ContactPage implements OnInit {
   }
 
   ngOnInit() {
-    // NativeStorage.remove('myitem')
-    //   .then(
-    //   () => alert('delete item!'),
-    //   error => alert('Error storing item'+error)
-    //   );
-    
-    // this.getMetaData();
+
   }
 
   getMetaData() {
@@ -40,6 +34,16 @@ export class ContactPage implements OnInit {
         }
       })
       .catch(this.loginHandleError);
+  }
+
+  clear() {
+    NativeStorage.remove('userinfo')
+      .then(
+      () => alert('delete item!'),
+      error => alert('Error storing item' + error)
+      );
+
+    this.getMetaData();
   }
 
   writeSource() {

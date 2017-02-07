@@ -5,7 +5,7 @@ import { NavController, App, Platform } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJoke } from "../../model/TJoke";
 import { UserData } from "../../model/user-data";
-import { NativeStorage,Device } from 'ionic-native';
+import { NativeStorage, Device } from 'ionic-native';
 import { CommentPage } from "../comment/comment";
 
 @Component({
@@ -29,51 +29,57 @@ export class WordPage implements OnInit {
   //     alert('Error getting location' + error);
   //   });
   // }
-
-
-
-
-
   ngOnInit() {
-
-      // Device.device.uuid
-      this.platform.ready().then(() => {
-        alert(Device.uuid);
-        NativeStorage.getItem('myitemddd')
-          .then(
-          data => {
-            alert('success');
-            if (data != null) {
-              this.dataService.isLogin = true;
-              this.dataService.loginUser = new UserData();
-              this.dataService.loginUser.id = data.id;
-              this.dataService.loginUser.deviceCode = data.deviceCode;
-            }
-            else {
-              this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
-                .then(response => {
-                  let result = response.json();
-                  if (result.status == 'success') {
-                    this.dataService.loginUser = new UserData();
-                    this.dataService.loginUser.id = data.id;
-                    this.dataService.loginUser.deviceCode = Device.uuid;
-                    NativeStorage.setItem('myitemddd', { id: '' + result.data.id, deviceCode: Device.uuid })
-                      .then(
-                      () => { this.tips = this.dataService.loginUser.id.toString(); },
-                      error => alert('Error storing item' + error)
-                      );
-                  } else {
-                    this.tips = "无法获取段子数据：" + result.tip;
-                  }
-                })
-                .catch(this.requestHandleError);
-            }
-          },
-          error => {
-            alert('无法读取本地数据:'+error.exception);
+    this.platform.ready().then(() => {
+      NativeStorage.getItem('userinfo')
+        .then(
+        data => {
+          if (data != null) {
+            this.dataService.isLogin = true;
+            this.dataService.loginUser = new UserData();
+            this.dataService.loginUser.id = data.id;
+            this.dataService.loginUser.deviceCode = data.deviceCode;
+          } else {
+            this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
+              .then(response => {
+                let result = response.json();
+                if (result.status == 'success') {
+                  this.dataService.loginUser = new UserData();
+                  this.dataService.loginUser.id = result.data;
+                  this.dataService.loginUser.deviceCode = Device.uuid;
+                  NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
+                    .then(
+                    () => { this.tips = this.dataService.loginUser.id.toString(); },
+                    error => alert('无法保存数据' + error)
+                    );
+                } else {
+                  this.tips = "无法获取段子数据：" + result.tip;
+                }
+              })
+              .catch(this.requestHandleError);
           }
-          );
-      });
+        },
+        error => {
+          this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
+            .then(response => {
+              let result = response.json();
+              if (result.status == 'success') {
+                this.dataService.loginUser = new UserData();
+                this.dataService.loginUser.id = result.data;
+                this.dataService.loginUser.deviceCode = Device.uuid;
+                NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
+                  .then(
+                  () => { this.tips = this.dataService.loginUser.id.toString(); },
+                  error => alert('无法保存数据' + error)
+                  );
+              } else {
+                this.tips = "无法获取段子数据：" + result.tip;
+              }
+            })
+            .catch(this.requestHandleError);
+        }
+        );
+    });
 
     this.getMoreJokeData(0);
   }
@@ -111,7 +117,7 @@ export class WordPage implements OnInit {
           this.selectedJoke.praiseNum++;
         } else {
           if (null != result.tip) {
-            alert(this.tips);
+            alert(result.tip);
           }
         }
       })
