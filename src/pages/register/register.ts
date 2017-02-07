@@ -6,7 +6,7 @@ import { NavController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { UserData } from "../../model/user-data";
 import { TabsPage } from '../tabs/tabs';
-import { Geolocation, FileChooser } from 'ionic-native';
+// import { Geolocation, FileChooser } from 'ionic-native';
 
 
 @Component({
@@ -27,14 +27,14 @@ export class RegisterPage implements OnInit {
 
   }
 
-  getGeographic() {
-    // FileChooser.open().then(uri => alert(uri)).catch(e => alert(e));
-    Geolocation.getCurrentPosition().then((resp) => {
-      alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
-    }).catch((error) => {
-      alert('Error getting location' + error);
-    });
-  }
+  // getGeographic() {
+  //   // FileChooser.open().then(uri => alert(uri)).catch(e => alert(e));
+  //   Geolocation.getCurrentPosition().then((resp) => {
+  //     alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
+  //   }).catch((error) => {
+  //     alert('Error getting location' + error);
+  //   });
+  // }
 
   login() {
     // this.getGeographic();

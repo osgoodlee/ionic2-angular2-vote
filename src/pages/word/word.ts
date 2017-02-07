@@ -22,13 +22,6 @@ export class WordPage implements OnInit {
 
   }
 
-  // getGeographic() {
-  //   Geolocation.getCurrentPosition().then((resp) => {
-  //     alert('lat: ' + resp.coords.latitude + ', lon: ' + resp.coords.longitude);
-  //   }).catch((error) => {
-  //     alert('Error getting location' + error);
-  //   });
-  // }
   ngOnInit() {
     this.platform.ready().then(() => {
       NativeStorage.getItem('userinfo')
