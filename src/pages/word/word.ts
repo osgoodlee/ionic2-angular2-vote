@@ -40,52 +40,46 @@ export class WordPage implements OnInit {
             this.dataService.loginUser.id = data.id;
             this.dataService.loginUser.deviceCode = data.deviceCode;
           } else {
-            this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
-              .then(response => {
-                let result = response.json();
-                if (result.status == 'success') {
-                  this.dataService.loginUser = new UserData();
-                  this.dataService.loginUser.id = result.data;
-                  this.dataService.loginUser.deviceCode = Device.uuid;
-                  NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
-                    .then(
-                    () => { this.tips = this.dataService.loginUser.id.toString(); },
-                    error => alert('无法保存数据' + error)
-                    );
-                } else {
-                  this.tips = "无法获取段子数据：" + result.tip;
-                }
-              })
-              .catch(this.requestHandleError);
+            //无法读取用户信息，设置为陌生人
+            this.dataService.isLogin = true;
+            this.dataService.loginUser = new UserData();
+            this.dataService.loginUser.id = 0;
+            this.dataService.loginUser.deviceCode = Device.uuid;
           }
+          this.getMoreJokeData(0);
         },
+        //第一次加载报error
         error => {
           this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
             .then(response => {
               let result = response.json();
               if (result.status == 'success') {
+                this.dataService.isLogin = true;
                 this.dataService.loginUser = new UserData();
                 this.dataService.loginUser.id = result.data;
                 this.dataService.loginUser.deviceCode = Device.uuid;
                 NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
                   .then(
-                  () => { this.tips = this.dataService.loginUser.id.toString(); },
+                  () => { },
                   error => alert('无法保存数据' + error)
                   );
               } else {
-                this.tips = "无法获取段子数据：" + result.tip;
+                //无法读取用户信息，设置为陌生人
+                this.dataService.isLogin = true;
+                this.dataService.loginUser = new UserData();
+                this.dataService.loginUser.id = 0;
+                this.dataService.loginUser.deviceCode = Device.uuid;
               }
+              this.getMoreJokeData(0);
             })
             .catch(this.requestHandleError);
         }
         );
     });
-
-    this.getMoreJokeData(0);
   }
 
   getMoreJokeData(categoryId: number) {
-    var jokeData = { "userId": 1, "pageNo": this.pageCount, "type": 1, "size": 5 };
+    var jokeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "type": 1, "size": 5 };
     this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
       .then(response => {
         let result = response.json();
@@ -109,7 +103,7 @@ export class WordPage implements OnInit {
 
   likeIt(jokeItem: TJoke) {
     this.selectedJoke = jokeItem;
-    var jokePraiseData = { "userId": 1, "jokeId": jokeItem.id };
+    var jokePraiseData = { "userId": this.dataService.loginUser.id, "jokeId": jokeItem.id };
     this.http.post(this.dataService.serverURL + 'joke/saveJokePraise', jokePraiseData).toPromise()
       .then(response => {
         let result = response.json();

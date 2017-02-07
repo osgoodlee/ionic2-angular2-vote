@@ -31,7 +31,7 @@ export class PicturePage implements OnInit {
   }
 
   getMoreJokeData(categoryId: number) {
-    var jokeData = { "userId": 1, "pageNo": this.pageCount, "type": 2, "categoryId": categoryId, "size": 5 };
+    var jokeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "type": 2, "categoryId": categoryId, "size": 5 };
     this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
       .then(response => {
         let result = response.json();
@@ -51,7 +51,7 @@ export class PicturePage implements OnInit {
 
   likeIt(jokeItem: TJoke) {
     this.selectedJoke = jokeItem;
-    var jokePraiseData = { "userId": 1, "jokeId": jokeItem.id };
+    var jokePraiseData = { "userId": this.dataService.loginUser.id, "jokeId": jokeItem.id };
     this.http.post(this.dataService.serverURL + 'joke/saveJokePraise', jokePraiseData).toPromise()
       .then(response => {
         let result = response.json();
@@ -59,15 +59,15 @@ export class PicturePage implements OnInit {
           this.selectedJoke.praiseNum++;
         } else {
           if (null != result.tip) {
-             alert(this.tips);
+            alert(result.tip);
           }
         }
       })
       .catch(this.requestHandleError);
   }
-  
+
   commentIt(jokeItem: TJoke) {
-      this.navCtrl.push(CommentPage, { 'selectedJoke': jokeItem });
+    this.navCtrl.push(CommentPage, { 'selectedJoke': jokeItem });
   }
 
   getNewJokeData() {
