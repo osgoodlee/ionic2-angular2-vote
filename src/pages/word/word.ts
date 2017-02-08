@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App, Platform } from 'ionic-angular';
+import { NavController, Platform, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJoke } from "../../model/TJoke";
 import { UserData } from "../../model/user-data";
@@ -17,8 +17,9 @@ export class WordPage implements OnInit {
   jokeList: TJoke[] = new Array<TJoke>();
   selectedJoke: TJoke;
   pageCount: number = 1; //已加载分页数量
+  newestJokeId: number = 0; //上次加载的最新的jokeid
   tips: string;
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App, public platform: Platform) {
+  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, public platform: Platform, public toastCtrl: ToastController) {
 
   }
 
@@ -54,7 +55,7 @@ export class WordPage implements OnInit {
                 NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
                   .then(
                   () => { },
-                  error => alert('无法保存数据' + error)
+                  error => this.presentToast('无法保存数据' + error)
                   );
               } else {
                 //无法读取用户信息，设置为陌生人
@@ -81,6 +82,9 @@ export class WordPage implements OnInit {
             this.jokeList.push(entry);
           }
           this.pageCount++;
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
         } else {
           if (null != result.tip) {
             this.tips = "无法获取段子数据：" + result.tip;
@@ -90,8 +94,28 @@ export class WordPage implements OnInit {
       .catch(this.requestHandleError);
   }
 
-  getNewJokeData() {
-
+  getNewJokeData(refresher) {
+    var jokeData = { "userId": this.dataService.loginUser.id, "index": this.newestJokeId, "pageNo": 1, "type": 1, "size": 1000 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          let jokeListTmp: TJoke[] = new Array<TJoke>();
+          for (let entry of result.data) {
+            jokeListTmp.push(entry);
+          }
+          this.jokeList = jokeListTmp.concat(this.jokeList);
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
+        } else {
+          if (null != result.tip) {
+            this.tips = "无法获取段子数据：" + result.tip;
+          }
+        }
+        refresher.complete();
+      })
+      .catch(this.requestHandleError);
   }
 
   likeIt(jokeItem: TJoke) {
@@ -104,7 +128,7 @@ export class WordPage implements OnInit {
           this.selectedJoke.praiseNum++;
         } else {
           if (null != result.tip) {
-            alert(result.tip);
+            this.presentToast(result.tip);
           }
         }
       })
@@ -122,15 +146,8 @@ export class WordPage implements OnInit {
 
   doRefresh(refresher) {
     setTimeout(() => {
-      let jokeListTmp: TJoke[] = new Array<TJoke>();
-      let tmp5 = new TJoke();
-      tmp5.id = 1;
-      tmp5.name = '发现我家多了一件种小麦用的木耧：';
-      tmp5.content = '<p>小时候，爸爸要去镇上买楼，可把我高兴坏了!在那个漫长等待的上午，我已无心学习，在学校里，逢人便于他分享我的喜悦，同学们都投来羡慕的目光。 中午，当放学铃声刚响起，我便飞奔回家，发现我家多了一件种小麦用的木耧.</p>';
-      jokeListTmp.push(tmp5);
-
-      this.jokeList = jokeListTmp.concat(this.jokeList);
-      refresher.complete();
+      this.getNewJokeData(refresher);
+      // refresher.complete();
     }, 1000);
   }
 
@@ -140,6 +157,14 @@ export class WordPage implements OnInit {
       this.getMoreJokeData(0);
       infiniteScroll.complete();
     }, 1000);
+  }
+
+  presentToast(info) {
+    let toast = this.toastCtrl.create({
+      message: info,
+      duration: 2000
+    });
+    toast.present();
   }
 
 }

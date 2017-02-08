@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Http } from '@angular/http';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavParams, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TComment } from "../../model/TComment";
 import { TJoke } from "../../model/TJoke";
@@ -12,11 +12,14 @@ import { AlertController } from 'ionic-angular';
 })
 export class CommentPage {
   pageCount: number = 1; //已加载分页数量
+  commentNum: number = 0; //评论总数
   commentList: TComment[] = new Array<TComment>();
+  hotCommentList: TComment[] = new Array<TComment>();
   selectedJoke: TJoke;
   tips: string;
+  displayHot: boolean;
 
-  constructor(public alertCtrl: AlertController, public navCtrl: NavController, private dataService: DataService, private navParm: NavParams, public http: Http) {
+  constructor(public alertCtrl: AlertController, private dataService: DataService, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
   }
 
   ngOnInit() {
@@ -30,9 +33,17 @@ export class CommentPage {
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
-          for (let entry of result.data) {
+          for (let entry of result.data.newData) {
             this.commentList.push(entry);
           }
+          if (null != result.data.hotData && result.data.hotData.length > 0) {
+            this.hotCommentList = result.data.hotData;
+            this.displayHot = true;
+          }
+          this.commentNum = result.data.total;
+          // for (let entry of result.hotData) {
+          //   this.hotCommentList.push(entry);
+          // }
           this.pageCount++;
         } else {
           if (null != result.tip) {
@@ -67,13 +78,12 @@ export class CommentPage {
                 let result = response.json();
                 if (result.status == 'success') {
                   this.selectedJoke.commentNum++;
-                  // this.commentList.push(result.data);
                   var tmpArray = new Array<TComment>();
                   tmpArray.push(result.data);
                   this.commentList = tmpArray.concat(this.commentList);
                 } else {
                   if (null != result.tip) {
-                    alert(result.tip);
+                    this.presentToast(result.tip);
                   }
                 }
               })
@@ -85,8 +95,23 @@ export class CommentPage {
     prompt.present();
   }
 
+  doInfinite(infiniteScroll) {
+    setTimeout(() => {
+      this.getMoreCommentData(this.selectedJoke.id);
+      infiniteScroll.complete();
+    }, 1000);
+  }
+
   private requestHandleError(error: any): Promise<any> {
     this.tips = "无法获取评论数据：" + error.tip;
     return Promise.reject(error.tip || error);
+  }
+
+  presentToast(info) {
+    let toast = this.toastCtrl.create({
+      message: info,
+      duration: 2000
+    });
+    toast.present();
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App, NavParams } from 'ionic-angular';
+import { NavController, App, NavParams, ToastController } from 'ionic-angular';
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { TJoke } from "../../model/TJoke";
 import { DataService } from "../service/data-service";
@@ -15,13 +15,14 @@ import { CommentPage } from "../comment/comment";
 export class PicturePage implements OnInit {
   tips: string;
   pageCount: number = 1; //已加载分页数量
+  newestJokeId: number = 0; //上次加载的最新的jokeid
   refreshTime: Date = new Date(); //刷新时间
   initialTime: Date = new Date(); //初始加载时间
   selectedJokeCategory: TJokeCategory;
   selectedJoke: TJoke;
   jokeList: TJoke[] = new Array<TJoke>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
 
   }
 
@@ -40,6 +41,9 @@ export class PicturePage implements OnInit {
             this.jokeList.push(entry);
           }
           this.pageCount++;
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
         } else {
           if (null != result.tip) {
             this.tips = "无法获取段子数据：" + result.tip;
@@ -59,7 +63,7 @@ export class PicturePage implements OnInit {
           this.selectedJoke.praiseNum++;
         } else {
           if (null != result.tip) {
-            alert(result.tip);
+            this.presentToast(result.tip);
           }
         }
       })
@@ -70,25 +74,35 @@ export class PicturePage implements OnInit {
     this.navCtrl.push(CommentPage, { 'selectedJoke': jokeItem });
   }
 
-  getNewJokeData() {
-
+  getNewJokeData(refresher) {
+    var jokeData = { "userId": this.dataService.loginUser.id, "index": this.newestJokeId, "pageNo": 1, "type": 2, "categoryId": this.selectedJokeCategory.id, "size": 1000 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          let jokeListTmp: TJoke[] = new Array<TJoke>();
+          for (let entry of result.data) {
+            jokeListTmp.push(entry);
+          }
+          this.jokeList = jokeListTmp.concat(this.jokeList);
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
+        } else {
+          if (null != result.tip) {
+            this.tips = "无法获取段子数据：" + result.tip;
+          }
+        }
+        refresher.complete();
+      })
+      .catch(this.requestHandleError);
   }
 
 
   doRefresh(refresher) {
     setTimeout(() => {
-      // for (var i = this.jokeList.length; i > 0; i--) {
-      //   this.jokeList.pop();
-      // }
-      let jokeListTmp: TJoke[] = new Array<TJoke>();
-      let tmp5 = new TJoke();
-      tmp5.id = 2;
-      tmp5.name = '威武的雄狮：';
-      tmp5.content = '<p><img src="http://image5.tuku.cn/pic/wallpaper/dongwu/xongshikuanpingbizhi/007.jpg"/></p>';
-      jokeListTmp.push(tmp5);
-
-      this.jokeList = jokeListTmp.concat(this.jokeList);
-      refresher.complete();
+      this.getNewJokeData(refresher);
+      // refresher.complete();
     }, 1000);
   }
 
@@ -103,5 +117,13 @@ export class PicturePage implements OnInit {
   private requestHandleError(error: any): Promise<any> {
     this.tips = "无法获取分类数据，出现异常：" + error.tip;
     return Promise.reject(error.tip || error);
+  }
+
+  presentToast(info) {
+    let toast = this.toastCtrl.create({
+      message: info,
+      duration: 2000
+    });
+    toast.present();
   }
 }
