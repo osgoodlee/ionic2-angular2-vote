@@ -1,5 +1,13 @@
 page-comment {
-// ion-icon{
-//     float: right;
-// }
+h3{
+    color: blue;
+}
+h4{
+    color: darkgray;
+}
+ion-row{
+    height: 25px;
+}
+div{word-break:break-word;}
+.content{word-break:break-word;white-space:pre-wrap;}
 }

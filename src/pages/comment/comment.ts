@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 import { NavParams, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { TComment } from "../../model/TComment";
 import { TJoke } from "../../model/TJoke";
 import { AlertController } from 'ionic-angular';
@@ -16,10 +17,11 @@ export class CommentPage {
   commentList: TComment[] = new Array<TComment>();
   hotCommentList: TComment[] = new Array<TComment>();
   selectedJoke: TJoke;
+  selectedComment: TComment;
   tips: string;
   displayHot: boolean;
 
-  constructor(public alertCtrl: AlertController, private dataService: DataService, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
+  constructor(public alertCtrl: AlertController, private dataService: DataService, private toolService: ToolService, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
   }
 
   ngOnInit() {
@@ -54,7 +56,10 @@ export class CommentPage {
       .catch(this.requestHandleError);
   }
 
-  addComment() {
+  addComment(endText) {
+    if (''! + endText) {
+      endText = '||' + endText;
+    }
     let prompt = this.alertCtrl.create({
       title: '编写评论',
       inputs: [
@@ -72,7 +77,7 @@ export class CommentPage {
         {
           text: '发布',
           handler: data => {
-            var commentData = { "jokeId": this.selectedJoke.id, "userId": this.dataService.loginUser.id, "content": data.content };
+            var commentData = { "jokeId": this.selectedJoke.id, "userId": this.dataService.loginUser.id, "content": data.content + endText };
             this.http.post(this.dataService.serverURL + 'joke/saveComment', commentData).toPromise()
               .then(response => {
                 let result = response.json();
@@ -80,6 +85,7 @@ export class CommentPage {
                   this.selectedJoke.commentNum++;
                   var tmpArray = new Array<TComment>();
                   tmpArray.push(result.data);
+                  tmpArray[0].praiseNum = 0;
                   this.commentList = tmpArray.concat(this.commentList);
                 } else {
                   if (null != result.tip) {
@@ -93,6 +99,23 @@ export class CommentPage {
       ]
     });
     prompt.present();
+  }
+
+  likeIt(commentItem: TComment) {
+    this.selectedComment = commentItem;
+    var commentPraiseData = { "userId": this.dataService.loginUser.id, "commentId": commentItem.id };
+    this.http.post(this.dataService.serverURL + 'joke/saveCommentPraise', commentPraiseData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result == 'success') {
+          this.selectedComment.praiseNum++;
+        } else {
+          if (null != result.tip) {
+            this.presentToast(result.tip);
+          }
+        }
+      })
+      .catch(this.requestHandleError);
   }
 
   doInfinite(infiniteScroll) {
@@ -113,5 +136,13 @@ export class CommentPage {
       duration: 2000
     });
     toast.present();
+  }
+
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
+  }
+
+  replyComment(replyComment: TComment) {
+    this.addComment('@' + replyComment.userId + ':' + replyComment.content);
   }
 }

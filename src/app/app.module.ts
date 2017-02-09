@@ -15,6 +15,7 @@ import { VideoPage } from '../pages/video/video';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DataService } from '../pages/service/data-service';
+import { ToolService } from "../pages/service/tool-service";
 
 
 @NgModule({
@@ -48,6 +49,6 @@ import { DataService } from '../pages/service/data-service';
     RegisterPage,
     TabsPage
   ],
-  providers: [DataService]
+  providers: [DataService,ToolService]
 })
 export class AppModule {}

@@ -4,7 +4,7 @@
 			评论
 		</ion-title>
 		<ion-buttons end>
-			<button ion-button icon-only (click)="addComment()">
+			<button ion-button icon-only (click)="addComment('')">
         <ion-icon name="create"></ion-icon>
       </button>
 		</ion-buttons>
@@ -21,16 +21,24 @@
 				<ion-avatar item-left>
 					<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
 				</ion-avatar>
-				<h2>{{commentItem.userId}}</h2>
-				<h3> {{commentItem.content}}</h3>
+				<div class="item-inner">
+					<h3>{{commentItem.userId}}</h3>
+					<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>
+         		<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
+      		</button>
+				</div>
+				<h4> {{transferTime(commentItem.createDate)}}</h4>
+				<div>
+					<p> {{commentItem.content}}</p>
+				</div>
 			</ion-item>
 			<ion-item-options side="right">
-				<button ion-button color="primary">
-        <ion-icon name="text"></ion-icon>
-        顶
+				<button (click)="likeIt(commentItem)" ion-button color="primary">
+        <ion-icon name="thumbs-up"></ion-icon>
+        点赞
       </button>
-				<button ion-button color="secondary">
-        <ion-icon name="call"></ion-icon>
+				<button ion-button color="secondary" (click)="replyComment(commentItem)">
+        <ion-icon name="text"></ion-icon>
         回复
       </button>
 				<button ion-button color="primary">
@@ -47,16 +55,28 @@
 				<ion-avatar item-left>
 					<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
 				</ion-avatar>
-				<h2>{{commentItem.userId}}</h2>
-				<h3> {{commentItem.content}}</h3>
+				<ion-row>
+					<ion-col width-70>
+						<h3>{{commentItem.userId}}</h3>
+					</ion-col>
+					<ion-col width-30>
+						<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>
+         			<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
+      			</button>
+					</ion-col>
+				</ion-row>
+				<h4> {{transferTime(commentItem.createDate)}}</h4>
+				<div>
+					<p class="content"> {{commentItem.content}}</p>
+				</div>
 			</ion-item>
 			<ion-item-options side="right">
-				<button ion-button color="primary">
-        <ion-icon name="text"></ion-icon>
-        顶
+				<button (click)="likeIt(commentItem)" ion-button color="primary">
+        <ion-icon name="thumbs-up"></ion-icon>
+        点赞
       </button>
-				<button ion-button color="secondary">
-        <ion-icon name="call"></ion-icon>
+				<button ion-button color="secondary" (click)="replyComment(commentItem)">
+        <ion-icon name="text"></ion-icon>
         回复
       </button>
 				<button ion-button color="primary">

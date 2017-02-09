@@ -30,7 +30,7 @@ export class VideoPage implements OnInit {
     let tmp1 = new TJoke();
     tmp1.id = 1;
     tmp1.name = '酷炫视频：';
-    tmp1.content = 'http://gslb.miaopai.com/stream/DaxxO1bqeGlE4D7-EwOjZA__.mp4';
+    tmp1.content = 'http://gslb.miaopai.com/stream/rMVlnMVjYCu2Po-93jd2JA__.mp4';
     let tmp2 = new TJoke();
     tmp2.id = 2;
     tmp2.name = '酷炫视频：';

@@ -41,26 +41,26 @@
       <h5>{{jokeItem.title}}</h5>
       <div [innerHTML]="jokeItem.content"></div>
     </ion-card-content>
-    <ion-row>
-      <ion-col>
-        <button ion-button color="primary" (click)="likeIt(jokeItem)" clear small icon-left>
-         <ion-icon name="bookmark"></ion-icon>
+  	<ion-row>
+			<ion-col>
+				<button ion-button color="primary" (click)="likeIt(jokeItem)" clear small icon-left>
+         <ion-icon name="thumbs-up"></ion-icon>
          {{jokeItem.praiseNum}}  喜欢
       </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button color="primary" (click)="commentIt(jokeItem)" clear small icon-left>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" (click)="commentIt(jokeItem)"  clear small icon-left>
         <ion-icon name="chatboxes"></ion-icon>
          {{jokeItem.commentNum}}  评论
       </button>
-      </ion-col>
-      <ion-col center text-center>
-        <button ion-button color="primary" clear small icon-left>
-          <ion-icon name="cloudy"></ion-icon>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+          <ion-icon name="share-alt"></ion-icon>
           分享
            </button>
-      </ion-col>
-    </ion-row>
+			</ion-col>
+		</ion-row>
   </ion-card>
 
   <ion-infinite-scroll (ionInfinite)="doInfinite($event)">

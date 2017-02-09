@@ -6,7 +6,7 @@ export class TComment {
     public id: number;
     public jokeId: number;
     public userId: number;
-    public createDate: Date;
+    public createDate: number;
     public praiseNum: number;
     public content: string;
 
