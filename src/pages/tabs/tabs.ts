@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 import { PictureHomePage } from '../picturehome/picturehome';
 import { WordPage } from '../word/word';
-import { ContactPage } from '../contact/contact';
+import { NoticePage } from '../notice/notice';
 import { VideoHomePage } from '../videohome/videohome';
 
 @Component({
@@ -14,7 +14,7 @@ export class TabsPage {
   tab1Root: any = WordPage;
   tab2Root: any = PictureHomePage;
   tab3Root: any = VideoHomePage;
-  tab4Root: any = ContactPage;
+  tab4Root: any = NoticePage;
 
   constructor() {
 

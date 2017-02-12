@@ -46,7 +46,7 @@ export class PicturePage implements OnInit {
           }
         } else {
           if (null != result.tip) {
-            this.tips = "无法获取段子数据：" + result.tip;
+           this.presentToast(result.tip);
           }
         }
       })

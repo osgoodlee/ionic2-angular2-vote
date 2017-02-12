@@ -5,7 +5,7 @@ import { FormsModule }   from '@angular/forms';
 import { IonicApp, IonicModule } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { PicturePage } from '../pages/picture/picture';
-import { ContactPage } from '../pages/contact/contact';
+import { NoticePage } from '../pages/notice/notice';
 import { VideoHomePage } from '../pages/videohome/videohome';
 import { PictureHomePage } from '../pages/picturehome/picturehome';
 import { WordPage } from '../pages/word/word';
@@ -22,7 +22,7 @@ import { ToolService } from "../pages/service/tool-service";
   declarations: [
     MyApp,
     WordPage,
-    ContactPage,
+    NoticePage,
     VideoHomePage,
     PicturePage,
     PictureHomePage,
@@ -39,7 +39,7 @@ import { ToolService } from "../pages/service/tool-service";
   entryComponents: [
     MyApp,
     WordPage,
-    ContactPage,
+    NoticePage,
     VideoHomePage,
     PicturePage,
     PictureHomePage,
