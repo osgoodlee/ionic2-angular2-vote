@@ -25,7 +25,8 @@ export class NoticePage implements OnInit {
   }
 
   getMoreNoticeData() {
-    var noticeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "size": 10 };
+    // var noticeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "size": 10 };
+    var noticeData = { "pageNo": this.pageCount, "size": 10 };
     this.http.post(this.dataService.serverURL + 'joke/getNotice', noticeData).toPromise()
       .then(response => {
         let result = response.json();
