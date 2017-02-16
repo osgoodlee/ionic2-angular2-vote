@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 
 import { NavController, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { TNotice } from "../../model/TNotice";
 
 @Component({
@@ -16,7 +17,7 @@ export class NoticePage implements OnInit {
   noticeList: TNotice[] = new Array<TNotice>();
   newestNoticeId: number = 0; //上次加载的最新的jokeid
 
-  constructor(private dataService: DataService, public navCtrl: NavController, public http: Http, public toastCtrl: ToastController) {
+  constructor(private dataService: DataService, private toolService: ToolService, public navCtrl: NavController, public http: Http, public toastCtrl: ToastController) {
 
   }
 
@@ -96,4 +97,7 @@ export class NoticePage implements OnInit {
     toast.present();
   }
 
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
+  }
 }

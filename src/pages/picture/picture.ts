@@ -5,6 +5,7 @@ import { NavController, App, NavParams, ToastController } from 'ionic-angular';
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { TJoke } from "../../model/TJoke";
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { CommentPage } from "../comment/comment";
 
 
@@ -13,7 +14,6 @@ import { CommentPage } from "../comment/comment";
   templateUrl: 'picture.html'
 })
 export class PicturePage implements OnInit {
-  tips: string;
   pageCount: number = 1; //已加载分页数量
   newestJokeId: number = 0; //上次加载的最新的jokeid
   refreshTime: Date = new Date(); //刷新时间
@@ -22,7 +22,7 @@ export class PicturePage implements OnInit {
   selectedJoke: TJoke;
   jokeList: TJoke[] = new Array<TJoke>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, private app: App, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
 
   }
 
@@ -115,7 +115,7 @@ export class PicturePage implements OnInit {
   }
 
   private requestHandleError(error: any): Promise<any> {
-    this.tips = "无法获取分类数据，出现异常：" + error.tip;
+    this.presentToast(error.tip);
     return Promise.reject(error.tip || error);
   }
 
@@ -125,5 +125,9 @@ export class PicturePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
   }
 }

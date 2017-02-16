@@ -11,6 +11,7 @@
 	<ion-card *ngFor="let jokeItem of jokeList">
 		<ion-card-content>
 			<h2>{{jokeItem.title}}</h2>
+			<h4 class="datestyle"> {{transferTime(jokeItem.publishDate)}}</h4>
 			<div [innerHTML]="jokeItem.content"></div>
 		</ion-card-content>
 		<ion-row>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App } from 'ionic-angular';
+import { NavController, App, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { PicturePage } from "../picture/picture";
@@ -14,9 +14,8 @@ import { PicturePage } from "../picture/picture";
 export class PictureHomePage implements OnInit {
 
   jokeCategoryList: TJokeCategory[] = new Array<TJokeCategory>();
-  tips: string;
 
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App) {
+  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App, public toastCtrl: ToastController) {
 
   }
 
@@ -32,7 +31,7 @@ export class PictureHomePage implements OnInit {
           this.jokeCategoryList = result.data;
         } else {
           if (null != result.tip) {
-            this.tips = "无法获取分类数据：" + result.tip;
+           this.presentToast(result.tip);
           }
         }
       })
@@ -44,7 +43,15 @@ export class PictureHomePage implements OnInit {
   }
 
   private requestHandleError(error: any): Promise<any> {
-    this.tips = "无法获取分类数据，出现异常：" + error.tip;
+    this.presentToast(error.tip);
     return Promise.reject(error.tip || error);
+  }
+
+   presentToast(info) {
+    let toast = this.toastCtrl.create({
+      message: info,
+      duration: 2000
+    });
+    toast.present();
   }
 }

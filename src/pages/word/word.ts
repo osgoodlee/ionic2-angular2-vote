@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 
 import { NavController, Platform, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { TJoke } from "../../model/TJoke";
 import { UserData } from "../../model/user-data";
 import { NativeStorage, Device } from 'ionic-native';
@@ -18,8 +19,7 @@ export class WordPage implements OnInit {
   selectedJoke: TJoke;
   pageCount: number = 1; //已加载分页数量
   newestJokeId: number = 0; //上次加载的最新的jokeid
-  tips: string;
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, public platform: Platform, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public platform: Platform, public toastCtrl: ToastController) {
 
   }
 
@@ -87,7 +87,7 @@ export class WordPage implements OnInit {
           }
         } else {
           if (null != result.tip) {
-            this.tips = "无法获取段子数据：" + result.tip;
+           this.presentToast(result.tip);
           }
         }
       })
@@ -110,7 +110,7 @@ export class WordPage implements OnInit {
           }
         } else {
           if (null != result.tip) {
-            this.tips = "无法获取段子数据：" + result.tip;
+           this.presentToast(result.tip);
           }
         }
         refresher.complete();
@@ -140,7 +140,7 @@ export class WordPage implements OnInit {
   }
 
   private requestHandleError(error: any): Promise<any> {
-    this.tips = error.tip;
+    this.presentToast(error.tip);
     return Promise.reject(error.tip || error);
   }
 
@@ -167,4 +167,7 @@ export class WordPage implements OnInit {
     toast.present();
   }
 
+ transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
+  }
 }

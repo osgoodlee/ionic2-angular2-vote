@@ -2,4 +2,14 @@ page-notice {
 .selectable {
   -webkit-user-select: auto;//控制网页内容选择范围
 }
+.datestyle{
+    color: darkgray;
+    text-indent:2em;
+}
+.card-md ion-card-content{
+    padding:13px 16px 0px 16px;
+}
+ion-col{
+    padding:5px 5px 0px 5px;
+}
 }

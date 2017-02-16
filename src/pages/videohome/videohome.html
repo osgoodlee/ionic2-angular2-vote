@@ -6,8 +6,12 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-	<ion-list>
+<ion-content class="card-background-page">
+	<ion-card *ngFor="let jokeCategoryItem of jokeCategoryList">
+		<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" (click)="browser(jokeCategoryItem)" />
+		<div class="card-title" (click)="browser(jokeCategoryItem)">{{jokeCategoryItem.name}}</div>
+	</ion-card>
+	<!--<ion-list>
 		<ion-item *ngFor="let jokeCategoryItem of jokeCategoryList">
 			<ion-thumbnail item-left>
 				<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" alt="{{jokeCategoryItem.name}}">
@@ -15,5 +19,5 @@
 			<p>{{jokeCategoryItem.name}}</p>
 			<button ion-button clear item-right (click)="browser(jokeCategoryItem)">查看</button>
 		</ion-item>
-	</ion-list>
+	</ion-list>-->
 </ion-content>

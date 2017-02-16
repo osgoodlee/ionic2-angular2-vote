@@ -6,39 +6,14 @@
 
 
 <ion-content class="cards-bg social-cards">
-  <!--  
-  <ion-card>
-    <ion-card-content>
-      <h5>cessss</h5>
-      <img src="http://images.rednet.cn/articleimage/2011/03/27/1152215221.jpg" />
-    </ion-card-content>
-    <ion-row>
-      <ion-col>
-        <button ion-button color="primary" clear small icon-left>
-         <ion-icon name="school"></ion-icon>
-        10 喜欢
-      </button>
-      </ion-col>
-      <ion-col>
-        <button ion-button color="primary" clear small icon-left>
-        <ion-icon name="ribbon"></ion-icon>
-        5  评论
-      </button>
-      </ion-col>
-      <ion-col center text-center>
-        <ion-note>
-          分享
-        </ion-note>
-      </ion-col>
-    </ion-row>
-  </ion-card>-->
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-card *ngFor="let jokeItem of jokeList">
     <ion-card-content>
-      <h5>{{jokeItem.title}}</h5>
+      <h2>{{jokeItem.title}}</h2>
+      <h4 class="datestyle"> {{transferTime(jokeItem.publishDate)}}</h4>
       <div [innerHTML]="jokeItem.content"></div>
     </ion-card-content>
   	<ion-row>

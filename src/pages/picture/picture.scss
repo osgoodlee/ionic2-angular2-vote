@@ -1,5 +1,13 @@
 page-picture {
-
+.datestyle{
+    color: darkgray;
+    text-indent:2em;
+}
+.card-md ion-card-content{
+    padding:13px 16px 0px 16px;
+}
+ion-col{
+    padding:5px 5px 0px 5px;
 }
 [padding] h1:first-child, [padding] h2:first-child, [padding] h3:first-child, [padding] h4:first-child, [padding] h5:first-child, [padding] h6:first-child {
     margin-top: 0rem;
@@ -7,6 +15,7 @@ page-picture {
 p {
   text-indent:1.5em;
 }
-  .social-cards ion-col {
-    padding: 0;
-  }
+.social-cards ion-col {
+  padding: 0;
+}
+}

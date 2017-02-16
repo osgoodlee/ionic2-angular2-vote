@@ -14,6 +14,7 @@
 	<ion-card *ngFor="let noticeItem of noticeList">
 		<ion-card-content>
 			<h2>{{noticeItem.title}}</h2>
+			<h4 class="datestyle"> {{transferTime(noticeItem.createDate)}}</h4>
 			<div [innerHTML]="noticeItem.description"></div>
 		</ion-card-content>
 	</ion-card>
