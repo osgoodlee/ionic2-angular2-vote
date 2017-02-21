@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { PicturePage } from "../picture/picture";
@@ -15,7 +15,7 @@ export class PictureHomePage implements OnInit {
 
   jokeCategoryList: TJokeCategory[] = new Array<TJokeCategory>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, private app: App, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, public toastCtrl: ToastController) {
 
   }
 
@@ -31,7 +31,7 @@ export class PictureHomePage implements OnInit {
           this.jokeCategoryList = result.data;
         } else {
           if (null != result.tip) {
-           this.presentToast(result.tip);
+            this.presentToast(result.tip);
           }
         }
       })
@@ -47,7 +47,7 @@ export class PictureHomePage implements OnInit {
     return Promise.reject(error.tip || error);
   }
 
-   presentToast(info) {
+  presentToast(info) {
     let toast = this.toastCtrl.create({
       message: info,
       duration: 2000

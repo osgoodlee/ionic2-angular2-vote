@@ -9,9 +9,9 @@ export class TJoke {
     public praiseNum: number;
     public commentNum: number;
     public status: number;
-    public name: string;
+    public title: string;
     public publishDate: Date;
     public content: string;
-    
+    public poster: string;
     constructor() { }
 }

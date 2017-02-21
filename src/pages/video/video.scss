@@ -1,6 +1,16 @@
 page-video {
-
+.card-md ion-card-content{
+  padding: 0;
 }
-.selectable {
-  -webkit-user-select: auto;//控制网页内容选择范围
+ion-grid{
+padding: 0;
+}
+img{
+  width:150px;
+  height:70px;
+}
+.datestyle{
+    color: darkgray;
+    text-indent:2em;
+}
 }

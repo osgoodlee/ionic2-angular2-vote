@@ -1,23 +1,24 @@
 <ion-header>
 	<ion-navbar>
 		<ion-title>
-			各类搞笑视频，电影
+			视频，电影
 		</ion-title>
 	</ion-navbar>
 </ion-header>
 
-<ion-content class="card-background-page">
+<ion-content>
 	<ion-card *ngFor="let jokeCategoryItem of jokeCategoryList">
-		<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" (click)="browser(jokeCategoryItem)" />
-		<div class="card-title" (click)="browser(jokeCategoryItem)">{{jokeCategoryItem.name}}</div>
+		<ion-card-content>
+			<ion-grid>
+				<ion-row (click)="browser(jokeCategoryItem)">
+					<ion-col width-25>
+						<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" />
+					</ion-col>
+					<ion-col width-75>
+						<div>{{jokeCategoryItem.name}}</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-card-content>
 	</ion-card>
-	<!--<ion-list>
-		<ion-item *ngFor="let jokeCategoryItem of jokeCategoryList">
-			<ion-thumbnail item-left>
-				<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" alt="{{jokeCategoryItem.name}}">
-			</ion-thumbnail>
-			<p>{{jokeCategoryItem.name}}</p>
-			<button ion-button clear item-right (click)="browser(jokeCategoryItem)">查看</button>
-		</ion-item>
-	</ion-list>-->
 </ion-content>

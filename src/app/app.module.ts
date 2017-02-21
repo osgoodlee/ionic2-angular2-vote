@@ -12,6 +12,7 @@ import { WordPage } from '../pages/word/word';
 import { CommentPage } from '../pages/comment/comment';
 import { QuestionPage } from '../pages/question/question';
 import { VideoPage } from '../pages/video/video';
+import { VideoDetailPage } from '../pages/videodetail/videodetail';
 import { RegisterPage } from '../pages/register/register';
 import { TabsPage } from '../pages/tabs/tabs';
 import { DataService } from '../pages/service/data-service';
@@ -30,6 +31,7 @@ import { ToolService } from "../pages/service/tool-service";
     RegisterPage,
     QuestionPage,
     VideoPage,
+    VideoDetailPage,
     TabsPage
   ],
   imports: [
@@ -46,6 +48,7 @@ import { ToolService } from "../pages/service/tool-service";
     CommentPage,
     QuestionPage,
     VideoPage,
+    VideoDetailPage,
     RegisterPage,
     TabsPage
   ],

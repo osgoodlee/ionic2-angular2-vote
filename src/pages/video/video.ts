@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, App, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { UserData } from "../../model/user-data";
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { TJoke } from "../../model/TJoke";
+import { VideoDetailPage } from "../videodetail/videodetail";
 import { DataService } from "../service/data-service";
-import chart from 'chart.js'; // 导入chart.js
-import vd from 'video.js';
+import { ToolService } from "../service/tool-service";
+// import chart from 'chart.js'; // 导入chart.js
 
 
 @Component({
@@ -16,70 +17,100 @@ import vd from 'video.js';
 })
 export class VideoPage implements OnInit {
 
-  user: UserData;
-  dataCount: number = 0; //已加载数据数量
-  refreshTime: Date = new Date(); //刷新时间
-  initialTime: Date = new Date(); //初始加载时间
+  pageCount: number = 1; //已加载分页数量
+  newestJokeId: number = 0; //上次加载的最新的jokeid
   selectedJokeCategory: TJokeCategory;
+  selectedJoke: TJoke;
   jokeList: TJoke[] = new Array<TJoke>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, private app: App, private navParm: NavParams, public http: Http) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, private navParm: NavParams, public http: Http, public toastCtrl: ToastController) {
   }
 
-  ionViewDidEnter() {
-    var canvas = <HTMLCanvasElement>document.getElementById("myChart");
-    var ctx = canvas.getContext("2d");  // 这里是关键, 不能写在constructor()中
-    var myChart = new chart.Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-      }
-    });
-  }
 
   ngOnInit() {
-    // this.ionViewDidEnter();
     this.selectedJokeCategory = this.navParm.get('selectedJokeCategory');
-    let tmp1 = new TJoke();
-    tmp1.id = 1;
-    tmp1.name = '酷炫视频：';
-    tmp1.content = 'http://gslb.miaopai.com/stream/rMVlnMVjYCu2Po-93jd2JA__.mp4';
-    let tmp2 = new TJoke();
-    tmp2.id = 2;
-    tmp2.name = '酷炫视频：';
-    tmp2.content = 'http://gslb.miaopai.com/stream/DaxxO1bqeGlE4D7-EwOjZA__.mp4';
-    let tmp3 = new TJoke();
-    tmp3.id = 3;
-    tmp3.name = '非洲二哥：';
-    tmp3.content = 'http://gslb.miaopai.com/stream/DaxxO1bqeGlE4D7-EwOjZA__.mp4';
-    this.jokeList.push(tmp1);
-    this.jokeList.push(tmp2);
-    this.jokeList.push(tmp3);
-    // this.getMetaData();
+    this.getMoreJokeData(this.selectedJokeCategory.id);
 
   }
 
+  getMoreJokeData(categoryId: number) {
+    var jokeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "type": 3, "categoryId": categoryId, "size": 5 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          for (let entry of result.data) {
+            this.jokeList.push(entry);
+          }
+          this.pageCount++;
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
+        } else {
+          if (null != result.tip) {
+            this.presentToast(result.tip);
+          }
+        }
+      })
+      .catch(this.requestHandleError);
+  }
+
+  getNewJokeData(refresher) {
+    var jokeData = { "userId": this.dataService.loginUser.id, "index": this.newestJokeId, "pageNo": 1, "type": 3, "categoryId": this.selectedJokeCategory.id, "size": 1000 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          let jokeListTmp: TJoke[] = new Array<TJoke>();
+          for (let entry of result.data) {
+            jokeListTmp.push(entry);
+          }
+          this.jokeList = jokeListTmp.concat(this.jokeList);
+          if (this.jokeList.length > 0) {
+            this.newestJokeId = this.jokeList[0].id;
+          }
+        } else {
+          if (null != result.tip) {
+            this.presentToast(result.tip);
+          }
+        }
+        refresher.complete();
+      })
+      .catch(this.requestHandleError);
+  }
+
+  browser(selectedItem: TJoke) {
+    this.navCtrl.push(VideoDetailPage, { 'selectedJoke': selectedItem });
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.getNewJokeData(refresher);
+    }, 1000);
+  }
+
+  doInfinite(infiniteScroll) {
+
+    setTimeout(() => {
+      this.getMoreJokeData(this.selectedJokeCategory.id);
+      infiniteScroll.complete();
+    }, 1000);
+  }
+
+  private requestHandleError(error: any): Promise<any> {
+    this.presentToast(error.tip);
+    return Promise.reject(error.tip || error);
+  }
+
+  presentToast(info) {
+    let toast = this.toastCtrl.create({
+      message: info,
+      duration: 2000
+    });
+    toast.present();
+  }
+
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
+  }
 }

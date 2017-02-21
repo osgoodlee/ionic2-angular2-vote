@@ -6,11 +6,13 @@
 	</ion-navbar>
 </ion-header>
 <ion-content>
-	<canvas id="myChart" width="400" height="400"></canvas>
-	<ion-card *ngFor="let jokeItem of jokeList">
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+	<!--<ion-card *ngFor="let jokeItem of jokeList">
 		<ion-card-content>
 			<h5>{{jokeItem.name}}</h5>
-			<video controls poster="http://ww1.sinaimg.cn/large/2e03ce6ejw1fc6jhteutej21hc0u0n0m.jpg">
+			<video width="100%" controls poster="http://ww1.sinaimg.cn/large/2e03ce6ejw1fc6jhteutej21hc0u0n0m.jpg">
 				<source src="{{jokeItem.content}}" type="video/mp4">
 				<source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag.
 			</video>
@@ -35,6 +37,25 @@
 				</button>
 			</ion-col>
 		</ion-row>
+	</ion-card>-->
+	<ion-card *ngFor="let jokeItem of jokeList">
+		<ion-card-content>
+			<ion-grid>
+				<ion-row (click)="browser(jokeItem)">
+					<ion-col width-33>
+						<img src="{{jokeItem.poster}}" />
+					</ion-col>
+					<ion-col width-67>
+						<div>
+							<h2>{{jokeItem.title}}</h2>
+							<h4 class="datestyle"> {{transferTime(jokeItem.publishDate)}}</h4>
+						</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-card-content>
 	</ion-card>
-
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
 </ion-content>

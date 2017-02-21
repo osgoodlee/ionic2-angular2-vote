@@ -16,8 +16,6 @@ import { CommentPage } from "../comment/comment";
 export class PicturePage implements OnInit {
   pageCount: number = 1; //已加载分页数量
   newestJokeId: number = 0; //上次加载的最新的jokeid
-  refreshTime: Date = new Date(); //刷新时间
-  initialTime: Date = new Date(); //初始加载时间
   selectedJokeCategory: TJokeCategory;
   selectedJoke: TJoke;
   jokeList: TJoke[] = new Array<TJoke>();

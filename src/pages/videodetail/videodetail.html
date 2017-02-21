@@ -1,0 +1,81 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{selectedJoke.title}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-card>
+		<ion-card-content>
+			<h5>{{selectedJoke.title}}</h5>
+			<video width="100%" controls poster="http://ww1.sinaimg.cn/large/2e03ce6ejw1fc6jhteutej21hc0u0n0m.jpg">
+				<source src="{{selectedJoke.content}}" type="video/mp4">
+				<source src="movie.ogg" type="video/ogg"> Your browser does not support the video tag.
+			</video>
+		</ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button color="primary" (click)="likeJoke(selectedJoke)" clear small icon-left>
+				<ion-icon name="thumbs-up"></ion-icon>
+				{{selectedJoke.praiseNum}}  喜欢
+				</button>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" (click)="addComment('')" clear small icon-left>
+				<ion-icon name="chatboxes"></ion-icon>
+				{{selectedJoke.commentNum}}  评论
+				</button>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+				<ion-icon name="share-alt"></ion-icon>
+				分享
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-card>
+
+	<ion-card>
+		<ion-card-content>
+			<ion-list-header>
+				最新评论{{commentNum}}
+			</ion-list-header>
+			<ion-item-sliding *ngFor="let commentItem of commentList">
+				<ion-item>
+					<ion-avatar item-left>
+						<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
+					</ion-avatar>
+					<ion-row>
+						<ion-col width-70>
+							<h3>{{commentItem.userId}}</h3>
+						</ion-col>
+						<ion-col width-30>
+							<button item-right ion-button color="primary" (click)="likeComment(commentItem)" clear small icon-left>
+         			<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
+      			</button>
+						</ion-col>
+					</ion-row>
+					<h4> {{transferTime(commentItem.createDate)}}</h4>
+					<div>
+						<p class="content"> {{commentItem.content}}</p>
+					</div>
+				</ion-item>
+				<ion-item-options side="right">
+					<button (click)="likeComment(commentItem)" ion-button color="primary">
+						<ion-icon name="thumbs-up"></ion-icon>
+						点赞
+					</button>
+					<button ion-button color="secondary" (click)="replyComment(commentItem)">
+						<ion-icon name="text"></ion-icon>
+						回复
+					</button>
+					<button ion-button color="primary">
+						<ion-icon name="mail"></ion-icon>
+						举报
+					</button>
+				</ion-item-options>
+			</ion-item-sliding>
+		</ion-card-content>
+	</ion-card>
+</ion-content>
