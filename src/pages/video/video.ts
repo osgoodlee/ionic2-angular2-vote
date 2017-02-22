@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
 import { NavController, NavParams, ToastController } from 'ionic-angular';
-import { UserData } from "../../model/user-data";
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { TJoke } from "../../model/TJoke";
 import { VideoDetailPage } from "../videodetail/videodetail";
@@ -30,7 +29,6 @@ export class VideoPage implements OnInit {
   ngOnInit() {
     this.selectedJokeCategory = this.navParm.get('selectedJokeCategory');
     this.getMoreJokeData(this.selectedJokeCategory.id);
-
   }
 
   getMoreJokeData(categoryId: number) {
