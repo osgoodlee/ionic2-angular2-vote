@@ -24,7 +24,8 @@ export class PictureHomePage implements OnInit {
   }
 
   getPictureTypeData() {
-    this.http.get(this.dataService.serverURL + 'joke/getJokeCategoryList/2').toPromise()
+    var jokeCategoryData = {  "type": 2 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeCategoryList',jokeCategoryData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
-
 import { NavController, ToastController, NavParams } from 'ionic-angular';
 import { UserData } from "../../model/user-data";
 import { TJoke } from "../../model/TJoke";
@@ -118,7 +117,7 @@ export class VideoDetailPage implements OnInit {
       .catch(this.requestHandleError);
   }
 
-   likeJoke(jokeItem: TJoke) {
+  likeJoke(jokeItem: TJoke) {
     this.selectedJoke = jokeItem;
     var jokePraiseData = { "userId": this.dataService.loginUser.id, "jokeId": jokeItem.id };
     this.http.post(this.dataService.serverURL + 'joke/saveJokePraise', jokePraiseData).toPromise()

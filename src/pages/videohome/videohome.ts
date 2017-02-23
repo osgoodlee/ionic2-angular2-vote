@@ -21,7 +21,8 @@ export class VideoHomePage {
   }
 
   getVideoTypeData() {
-    this.http.get(this.dataService.serverURL + 'joke/getJokeCategoryList/3').toPromise()
+    var jokeCategoryData = { "type": 3 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeCategoryList', jokeCategoryData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
