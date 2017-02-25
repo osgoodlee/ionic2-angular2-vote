@@ -18,6 +18,11 @@ export class VideoHomePage {
 
   ngOnInit() {
     this.getVideoTypeData();
+
+    this.http.get('http://www.bd-dy.com/play/9259-0.htm').toPromise()
+      .then(response => {
+      })
+      .catch(this.requestHandleError);
   }
 
   getVideoTypeData() {

@@ -10,8 +10,8 @@
 		你的浏览器不支持HTML5
 	</video>-->
 	<div class="videoDiv">
-		<video width="100%" src="{{selectedJoke.content}}" preload="preload" controls="controls" poster="{{selectedJoke.poster}}" type="video/mp4">
-			你的浏览器不支持HTML5
+		<video width="100%" preload="preload" controls="controls" poster="{{selectedJoke.poster}}">
+			 <source src="{{selectedJoke.content}}" type="video/mp4">
 		</video>
 		<ion-row>
 			<ion-col>
