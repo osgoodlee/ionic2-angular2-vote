@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 
 import { NavController, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { TJokeCategory } from "../../model/TJokeCategory";
 import { PicturePage } from "../picture/picture";
 
@@ -15,7 +16,7 @@ export class PictureHomePage implements OnInit {
 
   jokeCategoryList: TJokeCategory[] = new Array<TJokeCategory>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public toastCtrl: ToastController) {
 
   }
 
@@ -24,8 +25,8 @@ export class PictureHomePage implements OnInit {
   }
 
   getPictureTypeData() {
-    var jokeCategoryData = {  "type": 2 };
-    this.http.post(this.dataService.serverURL + 'joke/getJokeCategoryList',jokeCategoryData).toPromise()
+    var jokeCategoryData = { "type": 2 };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeCategoryList', jokeCategoryData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
@@ -54,5 +55,9 @@ export class PictureHomePage implements OnInit {
       duration: 2000
     });
     toast.present();
+  }
+
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
   }
 }

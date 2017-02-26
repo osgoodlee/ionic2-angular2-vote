@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 
 import { NavController, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
+import { ToolService } from "../service/tool-service";
 import { VideoPage } from "../video/video";
 import { TJokeCategory } from "../../model/TJokeCategory";
 
@@ -13,7 +14,7 @@ import { TJokeCategory } from "../../model/TJokeCategory";
 export class VideoHomePage {
   jokeCategoryList: TJokeCategory[] = new Array<TJokeCategory>();
 
-  constructor(public navCtrl: NavController, private dataService: DataService, public http: Http, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public toastCtrl: ToastController) {
   }
 
   ngOnInit() {
@@ -58,4 +59,7 @@ export class VideoHomePage {
     toast.present();
   }
 
+  transferTime(timeValue: number) {
+    return this.toolService.transferTime(timeValue);
+  }
 }

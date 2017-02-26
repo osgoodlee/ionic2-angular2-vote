@@ -7,6 +7,8 @@ export class TJokeCategory {
     public type: number;
     public name: string;
     public thumb: string;
-
+    public updatetime: number;
+    public description: string;
+    
     constructor() { }
 }
