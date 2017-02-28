@@ -73,7 +73,7 @@ export class WordPage implements OnInit {
   }
 
   getMoreJokeData(categoryId: number) {
-    var jokeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "type": 1, "size": 5 };
+    var jokeData = { "userId": this.dataService.loginUser.id, "pageNo": this.pageCount, "type": 1, "size": 10 };
     this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
       .then(response => {
         let result = response.json();

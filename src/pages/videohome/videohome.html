@@ -1,12 +1,19 @@
 <ion-header>
 	<ion-navbar>
-		<ion-title>
-			视频，电影
-		</ion-title>
+		<ion-title>视频，电影</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="refresh()">
+        		<ion-icon name="refresh"></ion-icon>
+      		</button>
+		</ion-buttons>
 	</ion-navbar>
 </ion-header>
 
 <ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
 	<ion-card *ngFor="let jokeCategoryItem of jokeCategoryList">
 		<ion-card-content>
 			<ion-grid>
@@ -25,4 +32,8 @@
 			</ion-grid>
 		</ion-card-content>
 	</ion-card>
+
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
 </ion-content>

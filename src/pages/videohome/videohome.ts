@@ -13,6 +13,8 @@ import { TJokeCategory } from "../../model/TJokeCategory";
 })
 export class VideoHomePage {
   jokeCategoryList: TJokeCategory[] = new Array<TJokeCategory>();
+  pageCount: number = 1; //已加载分页数量
+  newestJokeCategoryId: number = 0; //上次加载的最新的jokeid
 
   constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public toastCtrl: ToastController) {
   }
@@ -27,12 +29,18 @@ export class VideoHomePage {
   }
 
   getVideoTypeData() {
-    var jokeCategoryData = { "type": 3 };
+    var jokeCategoryData = { "pageNo": this.pageCount, "type": 3, "size": 10 };
     this.http.post(this.dataService.serverURL + 'joke/getJokeCategoryList', jokeCategoryData).toPromise()
       .then(response => {
         let result = response.json();
         if (result.status == 'success') {
-          this.jokeCategoryList = result.data;
+          for (let entry of result.data) {
+            this.jokeCategoryList.push(entry);
+          }
+          this.pageCount++;
+          if (this.jokeCategoryList.length > 0) {
+            this.newestJokeCategoryId = this.jokeCategoryList[0].id;
+          }
         } else {
           if (null != result.tip) {
             this.presentToast(result.tip);
@@ -40,6 +48,51 @@ export class VideoHomePage {
         }
       })
       .catch(this.requestHandleError);
+  }
+
+  getNewJokeCategoryData(refresher) {
+    var jokeData = { "pageNo": 1, "type": 2, "size": 100, "index": this.newestJokeCategoryId };
+    this.http.post(this.dataService.serverURL + 'joke/getJokeList', jokeData).toPromise()
+      .then(response => {
+        let result = response.json();
+        if (result.status == 'success') {
+          let jokeCategoryListTmp: TJokeCategory[] = new Array<TJokeCategory>();
+          for (let entry of result.data) {
+            jokeCategoryListTmp.push(entry);
+          }
+          this.jokeCategoryList = jokeCategoryListTmp.concat(this.jokeCategoryList);
+          if (this.jokeCategoryList.length > 0) {
+            this.newestJokeCategoryId = this.jokeCategoryList[0].id;
+          }
+        } else {
+          if (null != result.tip) {
+            this.presentToast(result.tip);
+          }
+        }
+        refresher.complete();
+      })
+      .catch(this.requestHandleError);
+  }
+
+  refresh() {
+    this.jokeCategoryList = new Array<TJokeCategory>();
+    this.pageCount = 1; //已加载分页数量
+    this.newestJokeCategoryId = 0; //上次加载的最新的jokeid
+    this.getVideoTypeData();
+  }
+
+  doRefresh(refresher) {
+    setTimeout(() => {
+      this.getNewJokeCategoryData(refresher);
+    }, 1000);
+  }
+
+  doInfinite(infiniteScroll) {
+
+    setTimeout(() => {
+      this.getVideoTypeData();
+      infiniteScroll.complete();
+    }, 1000);
   }
 
   browser(selectedItem: TJokeCategory) {
