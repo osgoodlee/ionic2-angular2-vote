@@ -11,91 +11,6 @@
 	</ion-navbar>
 </ion-header>
 
-<!--<ion-content>
-	<ion-list>
-		<ion-list-header *ngIf="displayHot">
-			最热评论
-		</ion-list-header>
-		<ion-item-sliding *ngFor="let commentItem of hotCommentList">
-			<ion-item>
-				<ion-avatar item-left>
-					<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
-				</ion-avatar>
-				<ion-row>
-					<ion-col width-70>
-						<h3>{{commentItem.userId}}</h3>
-					</ion-col>
-					<ion-col width-30>
-						<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>
-         			<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
-      			</button>
-					</ion-col>
-				</ion-row>
-				<h4> {{transferTime(commentItem.createDate)}}</h4>
-				<div>
-					<p class="content"> {{commentItem.content}}</p>
-				</div>
-			</ion-item>
-			<ion-item-options side="right">
-				<button (click)="likeIt(commentItem)" ion-button color="primary">
-        <ion-icon name="thumbs-up"></ion-icon>
-        点赞
-      </button>
-				<button ion-button color="secondary" (click)="replyComment(commentItem)">
-        <ion-icon name="text"></ion-icon>
-        回复
-      </button>
-				<button ion-button color="primary">
-        <ion-icon name="mail"></ion-icon>
-        举报
-      </button>
-			</ion-item-options>
-		</ion-item-sliding>
-		<ion-list-header>
-			最新评论{{commentNum}}
-		</ion-list-header>
-		<ion-item-sliding *ngFor="let commentItem of commentList">
-			<ion-item>
-				<ion-avatar item-left>
-					<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
-				</ion-avatar>
-				<ion-row>
-					<ion-col width-70>
-						<h3>{{commentItem.userId}}</h3>
-					</ion-col>
-					<ion-col width-30>
-						<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>
-         			<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
-      			</button>
-					</ion-col>
-				</ion-row>
-				<h4> {{transferTime(commentItem.createDate)}}</h4>
-				<div>
-					<p class="content"> {{commentItem.content}}</p>
-				</div>
-			</ion-item>
-			<ion-item-options side="right">
-				<button (click)="likeIt(commentItem)" ion-button color="primary">
-        <ion-icon name="thumbs-up"></ion-icon>
-        点赞
-      </button>
-				<button ion-button color="secondary" (click)="replyComment(commentItem)">
-        <ion-icon name="text"></ion-icon>
-        回复
-      </button>
-				<button ion-button color="primary">
-        <ion-icon name="mail"></ion-icon>
-        举报
-      </button>
-			</ion-item-options>
-		</ion-item-sliding>
-	</ion-list>
-	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
-		<ion-infinite-scroll-content></ion-infinite-scroll-content>
-	</ion-infinite-scroll>
-</ion-content>-->
-
-
 <ion-content>
 	<ion-card>
 		<ion-card-content *ngIf="displayHot">
@@ -105,11 +20,11 @@
 			<ion-item-sliding *ngFor="let commentItem of hotCommentList">
 				<ion-item>
 					<ion-avatar item-left>
-						<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
+						<img src="{{commentItem.image}}">
 					</ion-avatar>
 					<ion-row>
 						<ion-col width-70>
-							<h3>{{commentItem.userId}}</h3>
+							<h3>{{commentItem.userName}}</h3>
 						</ion-col>
 						<ion-col width-30>
 							<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>
@@ -148,11 +63,11 @@
 			<ion-item-sliding *ngFor="let commentItem of commentList">
 				<ion-item>
 					<ion-avatar item-left>
-						<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
+						<img src="{{commentItem.image}}">
 					</ion-avatar>
 					<ion-row>
 						<ion-col width-70>
-							<h3>{{commentItem.userId}}</h3>
+							<h3>{{commentItem.userName}}</h3>
 						</ion-col>
 						<ion-col width-30>
 							<button item-right ion-button color="primary" (click)="likeIt(commentItem)" clear small icon-left>

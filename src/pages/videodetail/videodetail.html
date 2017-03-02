@@ -71,11 +71,11 @@
 			<ion-item-sliding *ngFor="let commentItem of commentList">
 				<ion-item>
 					<ion-avatar item-left>
-						<img src="http://120.76.200.75:8080/lisi/Uploads/20170206/2017020610105560071.jpg">
+						<img src="{{commentItem.image}}">
 					</ion-avatar>
 					<ion-row>
 						<ion-col width-70>
-							<h3>{{commentItem.userId}}</h3>
+							<h3>{{commentItem.userName}}</h3>
 						</ion-col>
 						<ion-col width-30>
 							<button item-right ion-button color="primary" (click)="likeComment(commentItem)" clear small icon-left>

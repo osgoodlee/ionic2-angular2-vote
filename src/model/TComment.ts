@@ -9,6 +9,8 @@ export class TComment {
     public createDate: number;
     public praiseNum: number;
     public content: string;
+    public userName: string;
+    public image: string;
 
     constructor() { }
 }
