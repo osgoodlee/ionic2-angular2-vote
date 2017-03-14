@@ -37,20 +37,23 @@ export class RegisterPage implements OnInit {
   // }
 
   login() {
-    // this.getGeographic();
-    var userData = { "name": this.user.name, "password": this.user.password };
-    this.http.post('http://120.76.200.75/lisi/app/login', userData).toPromise()
-      .then(response => {
-        let result = response.json();
-        if (result.status == 'success') {
-          this.dataService.isLogin = true;
-          this.dataService.loginUser = result.data;
-          this.navCtrl.push(TabsPage);
-        } else {
-          this.loginTip = "登录失败：" + result.tip;
-        }
-      })
-      .catch(this.loginHandleError);
+    //  this.http.post('http://120.76.200.75/lisi/app/login', userData).toPromise()
+
+
+
+    // var userData = { "name": this.user.name, "password": this.user.password };
+    // this.http.post('http://120.76.200.75/lisi/app/login', userData).toPromise()
+    //   .then(response => {
+    //     let result = response.json();
+    //     if (result.status == 'success') {
+    //       this.dataService.isLogin = true;
+    //       this.dataService.loginUser = result.data;
+    //       this.navCtrl.push(TabsPage);
+    //     } else {
+    //       this.loginTip = "登录失败：" + result.tip;
+    //     }
+    //   })
+    //   .catch(this.loginHandleError);
   }
 
   //注册用户

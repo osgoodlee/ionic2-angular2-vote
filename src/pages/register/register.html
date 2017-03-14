@@ -1,12 +1,61 @@
+<html>
 <ion-header>
 	<ion-navbar>
 		<ion-title *ngIf="showLogin">登录</ion-title>
 		<ion-title *ngIf="!showLogin">注册</ion-title>
 	</ion-navbar>
 </ion-header>
+<head>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	var auths = null;
+document.addEventListener( "plusready", function(){
+	plus.oauth.getServices(
+		 function(services)
+	{
+		auths = services;
+	}, function(e){
+		alert( "获取分享服务列表失败："+e.message+" - "+e.code );
+	} );
+}, false );
+
+
+// 微信授权登录操作
+ function(){
+for(var i = 0; i < auths.length; i++){
+console.log(auths[i].description);
+if(auths[i].description == "微信"){
+var s = auths[i];
+break;
+}
+}
+if (!s.authResult) {
+console.log("微信尚未授权");
+s.login(
+//登录认证成功
+function(e){
+console.log("微信登录认证成功!");
+var objuser = s.userInfo;
+var uname = objuser.nickname;
+console.log(objuser.nickname);
+alert('success'); 
+},
+//登录认证失败
+function(e){
+alert( "登录认证失败！" );
+});
+}else{
+console.log("已经登录认证！");
+}
+}
+</script>
+
+</head>
+
+
 
 <ion-content class="padding">
-	<ion-list  *ngIf="showLogin">
+	<!--<ion-list  *ngIf="showLogin">
 		<ion-item>
 			<ion-label>用户名:</ion-label>
 			<ion-input type="text" [(ngModel)]="user.name"></ion-input>
@@ -51,5 +100,6 @@
 		<ion-item>
 			<span class="input-label">{{registerTip}}</span>
 		</ion-item>
-	</ion-list>
+	</ion-list>-->
 </ion-content>
+</html>
