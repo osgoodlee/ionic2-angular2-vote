@@ -1,0 +1,39 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>电影</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only (click)="refresh()">
+        		<ion-icon name="refresh"></ion-icon>
+      		</button>
+		</ion-buttons>
+	</ion-navbar>
+</ion-header>
+
+<ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-card *ngFor="let jokeCategoryItem of jokeCategoryList">
+		<ion-card-content>
+			<ion-grid>
+				<ion-row (click)="browser(jokeCategoryItem)">
+					<ion-col width-25>
+						<img src="http://www.meileyan.com{{jokeCategoryItem.thumb}}" />
+					</ion-col>
+					<ion-col width-75>
+						<div>{{jokeCategoryItem.name}}</div>
+						<h4> {{transferTime(jokeCategoryItem.updatetime)}}更新</h4>
+						<div>
+							<p class="content"> {{jokeCategoryItem.description}}</p>
+						</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-card-content>
+	</ion-card>
+
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>

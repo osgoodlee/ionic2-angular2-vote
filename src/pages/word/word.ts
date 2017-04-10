@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 
-import { NavController, Platform, ToastController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { DataService } from "../service/data-service";
 import { ToolService } from "../service/tool-service";
 import { TJoke } from "../../model/TJoke";
-import { UserData } from "../../model/user-data";
-import { NativeStorage, Device } from 'ionic-native';
+
+
 import { CommentPage } from "../comment/comment";
+declare var Wechat: any;
 
 @Component({
   selector: 'page-word',
@@ -19,57 +20,12 @@ export class WordPage implements OnInit {
   selectedJoke: TJoke;
   pageCount: number = 1; //已加载分页数量
   newestJokeId: number = 0; //上次加载的最新的jokeid
-  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public platform: Platform, public toastCtrl: ToastController) {
+  constructor(public navCtrl: NavController, private dataService: DataService, private toolService: ToolService, public http: Http, public toastCtrl: ToastController) {
 
   }
 
   ngOnInit() {
-    this.platform.ready().then(() => {
-      NativeStorage.getItem('userinfo')
-        .then(
-        data => {
-          if (data != null) {
-            this.dataService.isLogin = true;
-            this.dataService.loginUser = new UserData();
-            this.dataService.loginUser.id = data.id;
-            this.dataService.loginUser.deviceCode = data.deviceCode;
-          } else {
-            //无法读取用户信息，设置为陌生人
-            this.dataService.isLogin = true;
-            this.dataService.loginUser = new UserData();
-            this.dataService.loginUser.id = 0;
-            this.dataService.loginUser.deviceCode = Device.uuid;
-          }
-          this.getMoreJokeData(0);
-        },
-        //第一次加载报error
-        error => {
-          this.http.get(this.dataService.serverURL + 'joke/register/' + Device.uuid).toPromise()
-            .then(response => {
-              let result = response.json();
-              if (result.status == 'success') {
-                this.dataService.isLogin = true;
-                this.dataService.loginUser = new UserData();
-                this.dataService.loginUser.id = result.data;
-                this.dataService.loginUser.deviceCode = Device.uuid;
-                NativeStorage.setItem('userinfo', { id: result.data, deviceCode: Device.uuid })
-                  .then(
-                  () => { },
-                  error => this.presentToast('无法保存数据' + error)
-                  );
-              } else {
-                //无法读取用户信息，设置为陌生人
-                this.dataService.isLogin = true;
-                this.dataService.loginUser = new UserData();
-                this.dataService.loginUser.id = 0;
-                this.dataService.loginUser.deviceCode = Device.uuid;
-              }
-              this.getMoreJokeData(0);
-            })
-            .catch(this.requestHandleError);
-        }
-        );
-    });
+    this.getMoreJokeData(0);
   }
 
   getMoreJokeData(categoryId: number) {
@@ -87,7 +43,7 @@ export class WordPage implements OnInit {
           }
         } else {
           if (null != result.tip) {
-           this.presentToast(result.tip);
+            this.presentToast(result.tip);
           }
         }
       })
@@ -110,7 +66,7 @@ export class WordPage implements OnInit {
           }
         } else {
           if (null != result.tip) {
-           this.presentToast(result.tip);
+            this.presentToast(result.tip);
           }
         }
         refresher.complete();
@@ -134,6 +90,51 @@ export class WordPage implements OnInit {
       })
       .catch(this.requestHandleError);
   }
+
+  share(jokeItem: TJoke) {
+    var jokePraiseData = { "userId": this.dataService.loginUser.id, "jokeId": jokeItem.id };
+    Wechat.isInstalled(function (installed) {
+      // Wechat.share({
+      //   message: {
+      //     title: jokeItem.title,
+      //     description: jokeItem.content,
+      //     // thumb: 'https://gss0.baidu.com/7LsWdDW5_xN3otqbppnN2DJv/dmas/pic/item/fb22720e0cf3d7ca53daa5e3fa1fbe096b63a973.jpg',
+      //     media: {
+      //       type: Wechat.Type.LINK,
+      //       // webpageUrl: 'http://www.cnblogs.com/yanxiaodi/p/6060123.html'
+      //     }
+      //   },
+      //  scene: Wechat.Scene.SESSION   // share to SESSION
+      // }, function () {
+      //    alert('分享成功');
+      // }, function (reason) {
+      //   console.log("Failed: " + reason);
+      // });
+
+      // var scope = 'snsapi_userinfo',
+      //   state = '_' + (+new Date());
+      // Wechat.auth(scope, state, function (response) {
+      //   // you may use response.code to get the access token.
+      //   alert(JSON.stringify(response));
+      // }, function (reason) {
+      //   alert('Failed: ' + reason);
+      // });
+
+
+      Wechat.share({
+        text: "分享的文字",
+        scene: 0
+      }, function () {
+        alert("Success");
+      }, function (reason) {
+        alert("Failed: " + reason);
+      });
+
+    }, function (reason) {
+      alert('无法启动微信');
+    });
+  }
+
 
   commentIt(jokeItem: TJoke) {
     this.navCtrl.push(CommentPage, { 'selectedJoke': jokeItem });
@@ -167,7 +168,7 @@ export class WordPage implements OnInit {
     toast.present();
   }
 
- transferTime(timeValue: number) {
+  transferTime(timeValue: number) {
     return this.toolService.transferTime(timeValue);
   }
 }

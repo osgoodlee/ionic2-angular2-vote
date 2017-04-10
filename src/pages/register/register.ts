@@ -7,6 +7,7 @@ import { DataService } from "../service/data-service";
 import { UserData } from "../../model/user-data";
 import { TabsPage } from '../tabs/tabs';
 // import { Geolocation, FileChooser } from 'ionic-native';
+declare var Wechat: any;
 
 
 @Component({
@@ -24,7 +25,11 @@ export class RegisterPage implements OnInit {
   }
 
   ngOnInit() {
-
+    Wechat.isInstalled(function (installed) {
+      alert("Wechat installed: " + (installed ? "Yes" : "No"));
+    }, function (reason) {
+      alert("Failed: " + reason);
+    });
   }
 
   // getGeographic() {

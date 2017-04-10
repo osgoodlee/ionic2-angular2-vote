@@ -1,0 +1,32 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{selectedJokeCategory.name}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+	<ion-refresher (ionRefresh)="doRefresh($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+	<ion-card *ngFor="let jokeItem of jokeList">
+		<ion-card-content>
+			<ion-grid>
+				<ion-row (click)="browser(jokeItem)">
+					<ion-col width-33>
+						<img src="{{jokeItem.poster}}" />
+					</ion-col>
+					<ion-col width-67>
+						<div>
+							<h2>{{jokeItem.title}}</h2>
+							<h4 class="datestyle"> {{transferTime(jokeItem.publishDate)}}</h4>
+						</div>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-card-content>
+	</ion-card>
+	<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+		<ion-infinite-scroll-content></ion-infinite-scroll-content>
+	</ion-infinite-scroll>
+</ion-content>

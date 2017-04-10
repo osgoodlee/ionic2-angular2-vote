@@ -1,0 +1,108 @@
+<ion-header>
+	<ion-navbar>
+		<ion-title>
+			{{selectedJoke.title}}
+		</ion-title>
+	</ion-navbar>
+</ion-header>
+<ion-content>
+	<!--<video width="100%" src="{{selectedJoke.content}}" preload="preload" controls="controls" poster="{{selectedJoke.poster}}">
+		你的浏览器不支持HTML5
+	</video>-->
+	<div class="videoDiv">
+		<video width="100%" preload="preload" controls="controls" poster="{{selectedJoke.poster}}">
+			 <source src="{{selectedJoke.content}}" type="video/mp4">
+		</video>
+		<ion-row>
+			<ion-col>
+				<button ion-button color="primary" (click)="likeJoke(selectedJoke)" clear small icon-left>
+				<ion-icon name="thumbs-up"></ion-icon>
+				{{selectedJoke.praiseNum}}  喜欢
+				</button>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" (click)="addComment('')" clear small icon-left>
+				<ion-icon name="chatboxes"></ion-icon>
+				{{selectedJoke.commentNum}}  评论
+				</button>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+				<ion-icon name="share-alt"></ion-icon>
+				分享
+				</button>
+			</ion-col>
+		</ion-row>
+	</div>
+	<!--<ion-card>
+		<ion-card-content>
+			<h5>{{selectedJoke.title}}</h5>
+			<video width="100%" src="{{selectedJoke.content}}" preload="preload" controls="controls" poster="{{selectedJoke.poster}}">
+				你的浏览器不支持HTML5
+			</video>
+		</ion-card-content>
+		<ion-row>
+			<ion-col>
+				<button ion-button color="primary" (click)="likeJoke(selectedJoke)" clear small icon-left>
+				<ion-icon name="thumbs-up"></ion-icon>
+				{{selectedJoke.praiseNum}}  喜欢
+				</button>
+			</ion-col>
+			<ion-col>
+				<button ion-button color="primary" (click)="addComment('')" clear small icon-left>
+				<ion-icon name="chatboxes"></ion-icon>
+				{{selectedJoke.commentNum}}  评论
+				</button>
+			</ion-col>
+			<ion-col center text-center>
+				<button ion-button color="primary" clear small icon-left>
+				<ion-icon name="share-alt"></ion-icon>
+				分享
+				</button>
+			</ion-col>
+		</ion-row>
+	</ion-card>-->
+
+	<ion-card>
+		<ion-card-content>
+			<ion-list-header>
+				最新评论{{commentNum}}
+			</ion-list-header>
+			<ion-item-sliding *ngFor="let commentItem of commentList">
+				<ion-item>
+					<ion-avatar item-left>
+						<img src="{{commentItem.image}}">
+					</ion-avatar>
+					<ion-row>
+						<ion-col width-70>
+							<h3>{{commentItem.userName}}</h3>
+						</ion-col>
+						<ion-col width-30>
+							<button item-right ion-button color="primary" (click)="likeComment(commentItem)" clear small icon-left>
+         			<ion-icon name="thumbs-up"></ion-icon> {{commentItem.praiseNum}}  点赞
+      			</button>
+						</ion-col>
+					</ion-row>
+					<h4> {{transferTime(commentItem.createDate)}}</h4>
+					<div>
+						<p class="content"> {{commentItem.content}}</p>
+					</div>
+				</ion-item>
+				<ion-item-options side="right">
+					<button (click)="likeComment(commentItem)" ion-button color="primary">
+						<ion-icon name="thumbs-up"></ion-icon>
+						点赞
+					</button>
+					<button ion-button color="secondary" (click)="replyComment(commentItem)">
+						<ion-icon name="text"></ion-icon>
+						回复
+					</button>
+					<button ion-button color="primary">
+						<ion-icon name="mail"></ion-icon>
+						举报
+					</button>
+				</ion-item-options>
+			</ion-item-sliding>
+		</ion-card-content>
+	</ion-card>
+</ion-content>
